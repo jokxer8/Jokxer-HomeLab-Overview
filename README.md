@@ -1,6 +1,6 @@
 <div align="center">
 
-# Laboratorio tecnológico en casa (Home Technology Lab)
+<h1 align="center"><img src="assets/readme-banners/homelab-publico.svg" alt="Laboratorio tecnológico en casa (Home Technology Lab)" width="100%"></h1>
 
 ### Aprender · experimentar · construir servicios propios
 

@@ -10,6 +10,8 @@
 ![Estado](https://img.shields.io/badge/estado-en%20planificaci%C3%B3n-f59e0b?style=for-the-badge)
 ![Alcance](https://img.shields.io/badge/documentaci%C3%B3n-resumen%20p%C3%BAblico-334155?style=for-the-badge)
 
+[🧭 Visión](#visión) · [🧰 Líneas de trabajo](#líneas-de-trabajo) · [🗺️ Ruta](#ruta-general) · [🔒 Privacidad](#privacidad-del-proyecto)
+
 </div>
 
 ## Visión

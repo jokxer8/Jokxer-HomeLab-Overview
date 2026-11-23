@@ -4,51 +4,56 @@
 
 ### Aprender · experimentar · construir servicios propios
 
-**Un recorrido práctico por almacenamiento privado, infraestructura y servicios autohospedados.**
+**Un HomeLab operativo, desarrollado por etapas en equipos reutilizados y con herramientas gratuitas.**
 
 ![Proyecto](https://img.shields.io/badge/proyecto-laboratorio-2563eb?style=for-the-badge)
-![Estado](https://img.shields.io/badge/estado-servicios%20iniciales%20activos-059669?style=for-the-badge)
+![Estado](https://img.shields.io/badge/estado-servicios%20activos%20y%20hardening-f59e0b?style=for-the-badge)
 ![Alcance](https://img.shields.io/badge/documentaci%C3%B3n-resumen%20p%C3%BAblico-334155?style=for-the-badge)
 
-[🧭 Visión](#visión) · [🧰 Líneas de trabajo](#líneas-de-trabajo) · [🗺️ Ruta](#ruta-general) · [🔒 Privacidad](#privacidad-del-proyecto)
+[🧭 Visión](#visión) · [🧰 Servicios](#servicios-implementados) · [🗺️ Ruta](#próximas-etapas) · [🔒 Privacidad](#privacidad-del-proyecto)
 
 </div>
 
 ## Visión
 
-Este laboratorio explora cómo construir, administrar y proteger servicios tecnológicos en un entorno doméstico. El objetivo es aprender mediante proyectos graduales, documentar decisiones y convertir ideas en pruebas reproducibles, usando equipos reutilizados y herramientas gratuitas.
+Este laboratorio explora cómo construir y proteger servicios domésticos sobre hardware reutilizado. El trabajo incluye instalación del servidor, almacenamiento, administración remota, nube privada, contenedores y alojamiento web básico. Cada servicio se añade gradualmente y se documentan sus límites y tareas pendientes.
 
-## Líneas de trabajo
+## Servicios implementados
 
-| Línea | Objetivo |
-| --- | --- |
-| 💾 Almacenamiento privado | Organizar archivos y probar copias recuperables |
-| ☁️ Sincronización | Acceder a documentos entre dispositivos propios |
-| 🌐 Servicios web | Experimentar con aplicaciones y sitios de prueba |
-| 🧱 Aislamiento | Separar servicios y permisos según su función |
-| 🎮 Juegos y cómputo | Explorar servidores y cargas de trabajo |
-| 🛡️ Operación segura | Practicar acceso privado, monitoreo y recuperación |
+La Dell reutilizada ejecuta **Debian 13** y actualmente ofrece:
+
+- Almacenamiento en red mediante SMB y NFS.
+- Acceso SSH para administración.
+- Nube privada con Nextcloud, accesible por la red privada Tailscale.
+- Docker y Docker Compose para alojar servicios.
+- Páginas web sencillas de laboratorio.
+- Firewall activo y conectividad Ethernet validada.
+
+Tailscale permite el acceso remoto privado probado. La activación automática del cliente en Windows y la recuperación de los datos siguen pendientes. SMB y NFS se mantienen fuera de Internet.
 
 ## Estado al 23 de noviembre de 2026
 
-El equipo NAS reutilizado opera con Debian 13. Tiene servicios de archivos SMB/NFS, nube local, Docker, acceso SSH y alojamiento de páginas web sencillas. La conexión Ethernet y el acceso remoto mediante Tailscale fueron probados; el inicio automático del cliente Tailscale en Windows sigue pendiente.
+| Área | Estado |
+|---|---|
+| Sistema base y almacenamiento | Debian 13 y LVM operativos; diseño del SSD existente se conserva |
+| NAS y nube | SMB/NFS y Nextcloud desplegados; permisos y copias en validación |
+| Contenedores y web | Docker activo y páginas de laboratorio disponibles |
+| Acceso remoto | Tailscale probado; inicio automático de Windows pendiente |
+| Nextcloud | Servicio operativo; endurecimiento y revisión de configuración en curso |
+| Servicios futuros | Snapshots, monitoreo, proxy inverso y VMs siguen planificados |
 
-| Estado | Descripción |
-| --- | --- |
-| 🟢 Operativo | Sistema base, administración SSH, archivos de red y servicios iniciales |
-| 🟡 En validación | Recuperación de respaldos y permisos desde los clientes |
-| ⚪ En preparación | Automatización del acceso remoto y documentación de copias |
-| ⚪ Planificado | Snapshots, monitoreo, proxy inverso y máquinas virtuales según recursos |
+El disco externo de 5 TB está preparado como volumen de datos de nube. La ubicación de la copia previa del disco de 1 TB y su restauración deben comprobarse antes de depender de esos datos.
 
-La prioridad inmediata es validar una restauración antes de depender del disco externo de respaldo. El detalle de la distribución de almacenamiento permanece en el repositorio privado.
+## Próximas etapas
 
-## Ruta general
+1. Confirmar y ensayar la restauración de los datos de respaldo.
+2. Validar permisos SMB/NFS desde los equipos cliente.
+3. Completar el endurecimiento y las copias de Nextcloud.
+4. Automatizar el inicio de Tailscale en Windows.
+5. Ampliar los servicios después de verificar seguridad y recuperación.
 
-1. Validar copias mediante una restauración real.
-2. Comprobar permisos de acceso desde los dispositivos cliente.
-3. Completar el acceso remoto cotidiano.
-4. Añadir servicios gradualmente y documentar sus límites.
+El desarrollo técnico completo está en el [repositorio privado Jokxer-HomeLab](https://github.com/jokxer8/Jokxer-HomeLab).
 
 ## Privacidad del proyecto
 
-Esta página presenta el proyecto a grandes rasgos. El inventario detallado, decisiones de red, procedimientos operativos y configuración interna permanecen en un repositorio privado. No se publican direcciones de red, identificadores de equipos, credenciales ni llaves. Los servicios planificados todavía no están desplegados.
+Este repositorio ofrece un resumen público. Las direcciones de red, identificadores de equipos, claves, credenciales, reglas detalladas y procedimientos de administración permanecen fuera de esta página. Los servicios futuros indicados como planificados aún no están desplegados.

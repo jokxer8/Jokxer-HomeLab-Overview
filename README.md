@@ -1,59 +1,74 @@
 <div align="center">
 
-<h1 align="center"><img src="assets/readme-banners/homelab-publico.svg" alt="Laboratorio tecnológico en casa (Home Technology Lab)" width="100%"></h1>
+### Jokxer HomeLab · NAS · nube privada · servicios propios
 
-### Aprender · experimentar · construir servicios propios
+**Un laboratorio doméstico desarrollado por etapas sobre hardware reutilizado, con foco en aprender, operar y recuperar servicios de forma segura.**
 
-**Un HomeLab operativo, desarrollado por etapas en equipos reutilizados y con herramientas gratuitas.**
+![Proyecto](https://img.shields.io/badge/proyecto-HomeLab-2563eb?style=for-the-badge)
+![Estado](https://img.shields.io/badge/estado-recuperaci%C3%B3n%20y%20hardening%20en%20curso-f59e0b?style=for-the-badge)
+![Actualizado](https://img.shields.io/badge/estado-documentado%2024--11--2026-334155?style=for-the-badge)
 
-![Proyecto](https://img.shields.io/badge/proyecto-laboratorio-2563eb?style=for-the-badge)
-![Estado](https://img.shields.io/badge/estado-servicios%20activos%20y%20hardening-f59e0b?style=for-the-badge)
-![Alcance](https://img.shields.io/badge/documentaci%C3%B3n-resumen%20p%C3%BAblico-334155?style=for-the-badge)
-
-[🧭 Visión](#visión) · [🧰 Servicios](#servicios-implementados) · [🗺️ Ruta](#próximas-etapas) · [🔒 Privacidad](#privacidad-del-proyecto)
+[🧭 Proyecto](#visión) · [🧰 Servicios](#infraestructura-implementada) · [📈 Avances](#avances-recientes) · [🗺️ Próximos pasos](#siguiente-tramo) · [🔒 Privacidad](#seguridad-y-privacidad)
 
 </div>
 
 ## Visión
 
-Este laboratorio explora cómo construir y proteger servicios domésticos sobre hardware reutilizado. El trabajo incluye instalación del servidor, almacenamiento, administración remota, nube privada, contenedores y alojamiento web básico. Cada servicio se añade gradualmente y se documentan sus límites y tareas pendientes.
+Jokxer HomeLab es un proyecto práctico de infraestructura personal. Construyo y administro un NAS, una nube privada y servicios de laboratorio en una Dell reutilizada con Debian 13. El desarrollo avanzó desde la instalación del sistema y los discos hasta sincronización entre equipos, acceso remoto cifrado y automatización de respaldos y recuperación.
 
-## Servicios implementados
+La documentación separa lo desplegado de lo que aún se está probando. **La fase actual se concentra en demostrar que Nextcloud y sus datos se pueden recuperar antes de ampliar el laboratorio.**
 
-La Dell reutilizada ejecuta **Debian 13** y actualmente ofrece:
+## Infraestructura implementada
 
-- Almacenamiento en red mediante SMB y NFS.
-- Acceso SSH para administración.
-- Nube privada con Nextcloud, accesible por la red privada Tailscale.
-- Docker y Docker Compose para alojar servicios.
-- Páginas web sencillas de laboratorio.
-- Firewall activo y conectividad Ethernet validada.
+- Debian 13, SSH, Ethernet y firewall nftables con política restrictiva.
+- Almacenamiento en red con SMB/NFS para uso privado.
+- Docker y Docker Compose para servicios persistentes.
+- Nextcloud Hub 26 Spring 34.0.6, con MariaDB y Redis.
+- Nginx para HTTPS local y Tailscale/Serve para acceso remoto privado.
+- Sincronización Nextcloud en Windows con una única cuenta y carpeta, usando archivos bajo demanda.
+- Sitios web sencillos de laboratorio.
+- UPnP desactivado en el router. Nextcloud no se publica directamente en Internet ni requiere puertos públicos.
 
-Tailscale permite el acceso remoto privado probado. La activación automática del cliente en Windows y la recuperación de los datos siguen pendientes. SMB y NFS se mantienen fuera de Internet.
+## Avances recientes
 
-## Estado al 23 de noviembre de 2026
+### Datos y sincronización
 
-| Área | Estado |
-|---|---|
-| Sistema base y almacenamiento | Debian 13 y LVM operativos; diseño del SSD existente se conserva |
-| NAS y nube | SMB/NFS y Nextcloud desplegados; permisos y copias en validación |
-| Contenedores y web | Docker activo y páginas de laboratorio disponibles |
-| Acceso remoto | Tailscale probado; inicio automático de Windows pendiente |
-| Nextcloud | Servicio operativo; endurecimiento y revisión de configuración en curso |
-| Servicios futuros | Snapshots, monitoreo, proxy inverso y VMs siguen planificados |
+Se probó la sincronización en ambos sentidos entre Windows y Nextcloud. En la comparación de un conjunto restaurado se revisaron **67 archivos (63 MiB)**. Se encontró una diferencia en un archivo de prueba que fue editado en producción después de crear la copia; esa diferencia quedó explicada y no se confundió con una falla general de restauración.
 
-El disco externo de 5 TB está preparado como volumen de datos de nube. La ubicación de la copia previa del disco de 1 TB y su restauración deben comprobarse antes de depender de esos datos.
+### Respaldo y recuperación
 
-## Próximas etapas
+- Se generó un respaldo de MariaDB de **929 KB** y otro de archivos/configuración de **403 MB**.
+- La automatización ya incorpora verificación SHA-256, bloqueo de ejecuciones simultáneas, coordinación con las tareas programadas y protección ante montajes requeridos ausentes.
+- Se ensayó recuperación coordinada con systemd y se preparó una instancia temporal aislada, limitada en recursos y sin puertos publicados.
+- La restauración SQL terminó en el paso 262. El paso 263 verificará las tablas de la base restaurada.
+- **La restauración integral aún no está cerrada:** falta completar una simulación de interrupción del respaldo, reiniciar Nextcloud de forma controlada y comprobar la aplicación y sus dependencias.
+- Las copias actuales están en el propio NAS. Todavía falta establecer una copia independiente que cubra la pérdida del equipo.
 
-1. Confirmar y ensayar la restauración de los datos de respaldo.
-2. Validar permisos SMB/NFS desde los equipos cliente.
-3. Completar el endurecimiento y las copias de Nextcloud.
-4. Automatizar el inicio de Tailscale en Windows.
-5. Ampliar los servicios después de verificar seguridad y recuperación.
+## Decisiones de seguridad
 
-El desarrollo técnico completo está en el [repositorio privado Jokxer-HomeLab](https://github.com/jokxer8/Jokxer-HomeLab).
+- Acceso a Nextcloud solo por LAN/Tailscale, sin exposición pública directa.
+- Firewall con reglas mínimas; administración y SMB/NFS se mantienen privados.
+- Autenticación TOTP y códigos de recuperación configurados para las cuentas. El correo saliente tuvo una prueba exitosa.
+- Separación de las pruebas de restauración para no alterar datos de producción.
+- El SSD Kingston de 2 TB y su LVM actual se conservan sin reformatear, reparticionar ni redimensionar.
+- El disco de laboratorio de 1 TB tuvo sectores pendientes en una lectura SMART previa; no se destina a datos críticos ni se considera copia fiable.
+- Secretos, direcciones internas, identificadores de discos y detalles de acceso se omiten de esta publicación.
 
-## Privacidad del proyecto
+## Siguiente tramo
 
-Este repositorio ofrece un resumen público. Las direcciones de red, identificadores de equipos, claves, credenciales, reglas detalladas y procedimientos de administración permanecen fuera de esta página. Los servicios futuros indicados como planificados aún no están desplegados.
+1. Completar el paso 263 y documentar las tablas restauradas.
+2. Terminar la prueba de interrupción y recuperación del respaldo.
+3. Reiniciar Nextcloud de forma controlada y verificar aplicación, base de datos, Redis, tareas, HTTPS local y Tailscale.
+4. Completar el ensayo de recuperación de base de datos, archivos y configuración.
+5. Definir y comprobar una copia independiente del NAS.
+6. Revisar los avisos y actualizaciones de Nextcloud con evidencia actual y una reversión preparada.
+7. Cerrar pruebas de SMB/NFS y reconexión de Tailscale tras reinicio.
+8. Diagnosticar el disco de laboratorio solo después de completar la prioridad Nextcloud.
+
+## Documentación
+
+El [repositorio privado Jokxer-HomeLab](https://github.com/jokxer8/Jokxer-HomeLab) conserva la bitácora técnica, arquitectura, inventario, decisiones, fases y controles de recuperación.
+
+## Seguridad y privacidad
+
+Este repositorio resume el proyecto y sus decisiones sin publicar credenciales, claves, tokens, direcciones internas, UUID, datos personales ni procedimientos de acceso sensibles. Los servicios futuros —como monitorización, VMs y nuevos servidores— siguen siendo objetivos y no se describen como instalados.

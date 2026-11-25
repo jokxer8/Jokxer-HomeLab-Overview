@@ -21,7 +21,13 @@ Jokxer HomeLab es un laboratorio doméstico orientado a aprender administración
 
 El trabajo ya cubre mucho más que la instalación inicial: el NAS comparte archivos, Nextcloud sincroniza con Windows, Tailscale habilita acceso privado, Docker ejecuta los servicios y se está construyendo un proceso repetible de respaldo y restauración.
 
-> **Estado al 24 de noviembre de 2026:** la fase prioritaria es cerrar la recuperación de Nextcloud. El paso 262 completó la restauración SQL; el paso 263 verificará las tablas restauradas. En el último estado reportado, la aplicación Nextcloud estaba detenida mientras MariaDB y Redis seguían activos. Falta completar la prueba de interrupción y hacer un reinicio controlado antes de declarar el servicio recuperado.
+> **Estado al 25 de noviembre de 2026:** el HomeLab ya superó una restauración incremental aislada y una prueba de recuperación tras interrumpir un respaldo y reiniciar el NAS. También se guardó y verificó una copia independiente. El primer ciclo programado falló por coincidir con una tarea de mantenimiento. Quedan por validar la corrección y la restauración desde esa copia externa.
+
+## Resultados verificables
+
+| ✅ Restauración incremental | ✅ Copia independiente | 🟡 Respaldo programado |
+|---|---|---|
+| Instancia aislada y operaciones de lectura y escritura comprobadas. | Integridad SHA-256 confirmada; restauración pendiente. | Ejecución manual correcta; falta un ciclo programado exitoso. |
 
 ## Infraestructura desplegada
 
@@ -30,7 +36,7 @@ El trabajo ya cubre mucho más que la instalación inicial: el NAS comparte arch
 | Sistema base | Debian 13 en una Dell reutilizada | Operativo |
 | NAS | Compartición de archivos SMB/NFS | Servicios desplegados; validación final de permisos desde clientes pendiente |
 | Contenedores | Docker y Docker Compose | Activos; los datos de Docker se mantienen en un volumen de servicios |
-| Nube personal | Nextcloud 34.0.6 con MariaDB y Redis | Instalado; recuperación integral en validación |
+| Nube personal | Nextcloud 34.0.6 con MariaDB y Redis | Operativo en la última prueba; restauración incremental validada |
 | Acceso web | HTTPS local con Nginx y acceso remoto privado con Tailscale/Serve | Probado; no publicado directamente en Internet |
 | Sincronización | Cliente oficial de Nextcloud en Windows, una cuenta y una carpeta | Sincronización bidireccional y archivos bajo demanda probados |
 | Red | Ethernet y firewall nftables | Validados; reglas de acceso mínimas |
@@ -50,15 +56,11 @@ Se desplegaron SMB/NFS, Docker, Nextcloud, MariaDB, Redis y páginas web de prue
 
 ### 3. Respaldos y recuperación de Nextcloud
 
-- Se generó un respaldo de la base de datos de **929 KB** y otro de archivos/configuración de **403 MB**.
-- La automatización incluye comprobaciones SHA-256, bloqueo de ejecuciones simultáneas, coordinación con las tareas programadas y controles para evitar escribir cuando faltan montajes requeridos.
-- Se preparó una restauración temporal aislada, con límites de recursos y sin puertos publicados, para proteger la instancia de producción durante las pruebas.
-- Se comparó un conjunto restaurado de **67 archivos (63 MiB)**. La diferencia detectada corresponde a un archivo de prueba que se modificó en producción después de crear el respaldo.
-- La restauración SQL terminó en el paso 262; el paso 263 debe revisar la estructura de tablas.
-- La recuperación coordinada por systemd se probó parcialmente. La simulación de interrupción, el reinicio controlado y la validación final de la aplicación siguen pendientes.
-- Los respaldos actuales están guardados en el NAS. Hace falta una copia independiente para cubrir la pérdida del equipo.
-
-Estos resultados muestran avances concretos, pero **crear y verificar respaldos no equivale todavía a demostrar una recuperación completa**.
+- El ciclo de respaldo comprueba la integridad con SHA-256, impide ejecuciones simultáneas y evita escribir cuando faltan montajes requeridos.
+- Se validó una **restauración incremental aislada**: se restauraron la base de datos y los archivos, y se probaron descarga, escritura y eliminación sin alterar producción.
+- Se interrumpió un respaldo de forma controlada y se reinició el NAS. La recuperación devolvió Nextcloud a funcionamiento normal y no dejó una recuperación pendiente.
+- El ciclo terminó correctamente al iniciarlo manualmente mediante systemd. La programación diaria está habilitada; la primera ejecución disparada por el temporizador no completó el respaldo. La corrección está en validación.
+- Se guardó una **copia independiente del NAS** y se comprobó con SHA-256. La integridad del archivo no sustituye una prueba de restauración desde esa copia.
 
 ## Decisiones de seguridad y estabilidad
 
@@ -72,17 +74,14 @@ Estos resultados muestran avances concretos, pero **crear y verificar respaldos 
 
 ## Siguiente etapa
 
-1. Completar el paso 263 y registrar el resultado de las tablas restauradas.
-2. Terminar la simulación de interrupción del respaldo.
-3. Reiniciar Nextcloud de forma controlada y comprobar aplicación, base de datos, Redis y acceso privado.
-4. Completar el ensayo integral de recuperación de base de datos, archivos y configuración.
-5. Establecer y probar una copia independiente del NAS.
-6. Revisar el estado actual de seguridad y las actualizaciones de Nextcloud con una reversión preparada.
-7. Validar permisos SMB/NFS desde los equipos cliente y el acceso remoto tras reinicios.
-8. Diagnosticar el disco de laboratorio de 1 TB cuando la fase de Nextcloud esté cerrada.
+1. Comprobar que la corrección permite que el ciclo programado complete un respaldo.
+2. Ensayar la restauración desde la copia independiente, en un entorno aislado.
+3. Revisar avisos de seguridad y actualizaciones de Nextcloud con una reversión preparada.
+4. Validar permisos SMB/NFS desde los equipos cliente y el acceso remoto tras reinicios.
+5. Diagnosticar el disco de laboratorio de 1 TB cuando cierre esta fase.
 
 Los servicios futuros —monitorización, snapshots, virtualización y nuevos servidores— son objetivos posteriores, no instalaciones actuales.
 
 ## Documentación y alcance
 
-El [repositorio privado Jokxer-HomeLab](https://github.com/jokxer8/Jokxer-HomeLab) contiene la bitácora técnica, el inventario, la arquitectura, las decisiones, las fases y los procedimientos detallados. Este README resume el progreso público sin divulgar datos operativos sensibles.
+La bitácora técnica y los procedimientos de operación se mantienen en el repositorio privado. Este resumen recoge los resultados y las decisiones que se pueden compartir.

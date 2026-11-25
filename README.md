@@ -24,6 +24,8 @@ El trabajo ya cubre mucho más que la instalación inicial: el NAS comparte arch
 
 ## Resultados verificables
 
+**Último avance:** una nueva copia independiente se transfirió y se verificó manualmente. La preparación semanal quedó programada y se probó la retención bajo supervisión. El flujo externo detectó y detuvo una discrepancia entre archivos comprimidos de la misma instantánea; la copia anterior conserva la integridad de su checksum original. [Resultados, alcance y pendientes](resultados-de-respaldo.md).
+
 | ✅ Restauración incremental | ✅ Copia independiente | 🟡 Respaldo programado |
 |---|---|---|
 | Instancia aislada y operaciones de lectura y escritura comprobadas. | Instancia restaurada; 142 archivos escaneados sin errores y operaciones autenticadas de descarga, escritura y eliminación comprobadas. | Ejecución manual correcta; falta un ciclo programado exitoso. |
@@ -89,8 +91,8 @@ flowchart LR
 
 ## Siguiente etapa
 
-1. Comprobar que la corrección permite que el ciclo programado complete un respaldo.
-2. Medir duración y repetir la recuperación aislada cuando haya otro respaldo programado verificable.
+1. Confirmar por separado el respaldo interno y la exportación semanal, ambos iniciados por sus respectivos temporizadores.
+2. Cerrar la recepción semanal de extremo a extremo y medir la duración de otro ensayo de recuperación aislado.
 3. Revisar avisos de seguridad y actualizaciones de Nextcloud con una reversión preparada.
 4. Validar permisos SMB/NFS desde los equipos cliente y el acceso remoto tras reinicios.
 5. Diagnosticar el disco de laboratorio de 1 TB cuando cierre esta fase.

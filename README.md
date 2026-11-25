@@ -20,13 +20,17 @@ Jokxer HomeLab es un laboratorio doméstico orientado a aprender administración
 
 El trabajo ya cubre mucho más que la instalación inicial: el NAS comparte archivos, Nextcloud sincroniza con Windows, Tailscale habilita acceso privado, Docker ejecuta los servicios y se está construyendo un proceso repetible de respaldo y restauración.
 
-> **Estado al 25 de noviembre de 2026:** el HomeLab ya superó una restauración incremental aislada y una prueba de recuperación tras interrumpir un respaldo y reiniciar el NAS. También se guardó y verificó una copia independiente. El primer ciclo programado falló por coincidir con una tarea de mantenimiento. El ajuste del bloqueo superó una prueba controlada y un respaldo iniciado manualmente por systemd. Sigue pendiente confirmar un ciclo disparado por el temporizador y completar la restauración desde la copia independiente.
+> **Ensayo de recuperación externa.** Al 25 de noviembre de 2026, desde una copia externa arrancó una instancia aislada de Nextcloud y su escaneo recorrió **142 archivos en 24 carpetas, sin errores**. Se comprobó que el formulario de inicio abre y que el acceso a archivos sin autenticación se rechaza. También se verificó la descarga autenticada de un archivo y que su contenido coincidía. Quedan por comprobar la escritura desde esa instancia y un respaldo iniciado por el temporizador.
 
 ## Resultados verificables
 
 | ✅ Restauración incremental | ✅ Copia independiente | 🟡 Respaldo programado |
 |---|---|---|
-| Instancia aislada y operaciones de lectura y escritura comprobadas. | Integridad SHA-256 confirmada; restauración pendiente. | Ejecución manual correcta; falta un ciclo programado exitoso. |
+| Instancia aislada y operaciones de lectura y escritura comprobadas. | Integridad confirmada e instancia restablecida; 142 archivos escaneados sin errores. | Ejecución manual correcta; falta un ciclo programado exitoso. |
+
+**Nivel del hito:** validación parcial de la restauración externa. El escaneo comprueba la indexación. La descarga autenticada validó un archivo de prueba, no todos los archivos.
+
+**Indicadores operativos por medir:** respaldos disparados por el temporizador que terminaron correctamente / respaldos previstos en una ventana definida, y tiempo desde el inicio de un ensayo hasta que se comprueba el acceso a archivos. Todavía no hay cifras representativas para estos dos indicadores.
 
 ## Infraestructura desplegada
 
@@ -68,7 +72,9 @@ flowchart LR
     A["Respaldo local"] --> B["Verificación SHA-256"]
     B --> C["Restauración incremental aislada: validada"]
     B --> D["Copia independiente: verificada"]
-    D --> E["Restauración desde esa copia: pendiente"]
+    D --> E["Arranque aislado y escaneo: validados"]
+    E --> F["Lectura autenticada: validada con un archivo"]
+    F --> G["Escritura: pendiente"]
 ```
 
 ## Decisiones de seguridad y estabilidad
@@ -84,7 +90,7 @@ flowchart LR
 ## Siguiente etapa
 
 1. Comprobar que la corrección permite que el ciclo programado complete un respaldo.
-2. Ensayar la restauración desde la copia independiente, en un entorno aislado.
+2. Completar la validación de escritura desde la copia externa en el entorno aislado.
 3. Revisar avisos de seguridad y actualizaciones de Nextcloud con una reversión preparada.
 4. Validar permisos SMB/NFS desde los equipos cliente y el acceso remoto tras reinicios.
 5. Diagnosticar el disco de laboratorio de 1 TB cuando cierre esta fase.

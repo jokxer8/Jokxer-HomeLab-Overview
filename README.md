@@ -13,9 +13,11 @@ Caso práctico de infraestructura doméstica: qué implementé, qué probé y qu
 
 [🏠 Proyecto](#el-proyecto) · [✅ Resultados](#resultados-verificables) · [🧰 Infraestructura](#infraestructura-desplegada) · [🗺️ Catálogo de servicios](#catálogo-de-servicios) · [🗂️ Evidencia y alcance](resultados-de-respaldo.md) · [🌐 Hosting y portal](hosting-web.md) · [📍 Próxima etapa](#siguiente-etapa)
 
-**Ruta de lectura:** [Plan maestro](PLAN-MAESTRO.md) · [En palabras simples](EN-PALABRAS-SIMPLES.md)
+**Ruta de lectura:** [Plan Maestro](PLAN-MAESTRO.md) · [En palabras simples](EN-PALABRAS-SIMPLES.md)
 
 </div>
+
+**Tecnologías en uso:** Debian y Docker para la nube privada, Tailscale para el acceso autorizado, Cloudflare Tunnel para la portada pública del portal y Resend para correo transaccional. [Qué hace cada herramienta](PLAN-MAESTRO.md#tecnologías-y-para-qué-las-uso).
 
 ## El proyecto
 

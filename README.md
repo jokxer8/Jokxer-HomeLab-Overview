@@ -8,9 +8,10 @@ Caso práctico de infraestructura doméstica: qué implementé, qué probé y qu
 
 ![Sistema: Debian 13](https://img.shields.io/badge/Sistema-Debian%2013-1E3A5F?style=for-the-badge)
 ![Restauración: Incremental validada](https://img.shields.io/badge/Restauraci%C3%B3n-Incremental%20validada-176754?style=for-the-badge)
-![Programación: Pendiente de confirmar](https://img.shields.io/badge/Programaci%C3%B3n-Pendiente%20de%20confirmar-94520B?style=for-the-badge)
+![Imágenes Docker: 3 protegidas](https://img.shields.io/badge/Docker-3%20im%C3%A1genes%20protegidas-176754?style=for-the-badge)
+![Automatización: Programada](https://img.shields.io/badge/Automatizaci%C3%B3n-Programada-94520B?style=for-the-badge)
 
-[🏠 Proyecto](#el-proyecto) · [✅ Resultados](#resultados-verificables) · [🧰 Infraestructura](#infraestructura-desplegada) · [📍 Próxima etapa](#siguiente-etapa)
+[🏠 Proyecto](#el-proyecto) · [✅ Resultados](#resultados-verificables) · [🧰 Infraestructura](#infraestructura-desplegada) · [🗺️ Catálogo de servicios](#catálogo-de-servicios) · [🗂️ Evidencia y alcance](resultados-de-respaldo.md) · [📍 Próxima etapa](#siguiente-etapa)
 
 </div>
 
@@ -18,21 +19,21 @@ Caso práctico de infraestructura doméstica: qué implementé, qué probé y qu
 
 Jokxer HomeLab es un laboratorio doméstico orientado a aprender administración de sistemas, almacenamiento, redes, contenedores, nube privada y recuperación ante fallos. Se desarrolla sobre una Dell reutilizada con Debian 13, priorizando estabilidad, seguridad y las herramientas disponibles.
 
-El trabajo ya cubre mucho más que la instalación inicial: el NAS comparte archivos, Nextcloud sincroniza con Windows, Tailscale habilita acceso privado, Docker ejecuta los servicios y se está construyendo un proceso repetible de respaldo y restauración.
+El trabajo ya cubre mucho más que la instalación inicial: el NAS comparte archivos, Nextcloud sincroniza con Windows, Tailscale habilita acceso privado, Docker ejecuta los servicios y ya cuenta con un proceso de respaldo implementado y pruebas de recuperación documentadas.
 
-> **Ensayo de recuperación externa · 25 de noviembre de 2026.** La copia independiente se restauró en un entorno aislado. El escaneo recorrió 142 archivos en 24 carpetas sin errores; se verificaron descarga autenticada con contenido idéntico, escritura con comprobación del contenido y eliminación del archivo de prueba. Esto no mide el tiempo de recuperación ni verifica todos los archivos individualmente. Falta confirmar una ejecución exitosa iniciada por el temporizador.
+> **Ensayo de recuperación externa · 25 de noviembre de 2026.** La copia independiente se restauró en un entorno aislado. El escaneo recorrió 142 archivos en 24 carpetas sin errores; se verificaron descarga autenticada con contenido idéntico, escritura con comprobación del contenido y eliminación del archivo de prueba. Esto no mide el tiempo de recuperación ni verifica todos los archivos individualmente.
 
 ## Resultados verificables
 
-**Último avance:** una nueva copia independiente se transfirió y se verificó manualmente. La preparación semanal quedó programada y se probó la retención bajo supervisión. El flujo externo detectó y detuvo una discrepancia entre archivos comprimidos de la misma instantánea; la copia anterior conserva la integridad de su checksum original. [Resultados, alcance y pendientes](resultados-de-respaldo.md).
+**Corte: 25 de noviembre de 2026.** El NAS quedó operativo y preparado para ejecutar los respaldos programados. Se verificó que una exportación regenerada de la misma instantánea era idéntica byte a byte y que Windows podía reanudar el flujo sin descargarla de nuevo.
 
-| ✅ Restauración incremental | ✅ Copia independiente | 🟡 Respaldo programado |
+| Hito | Resultado comprobado | Alcance |
 |---|---|---|
-| Instancia aislada y operaciones de lectura y escritura comprobadas. | Instancia restaurada; 142 archivos escaneados sin errores y operaciones autenticadas de descarga, escritura y eliminación comprobadas. | Ejecución manual correcta; falta un ciclo programado exitoso. |
+| Recuperación desde copia independiente | **142 archivos en 24 carpetas**, sin errores de escaneo; descarga, escritura y eliminación autenticadas | Entorno aislado y archivo de control; no se verificó cada archivo individualmente |
+| Protección de dependencias Docker | **3 de 3 imágenes** respaldadas e importadas; **36 de 36 capas únicas** verificadas con SHA-256 | Importación en el host existente, no recuperación desde cero |
+| Respaldo programado | Temporizadores activos en Debian; tarea de Windows iniciada manualmente desde el Programador, con bitácora y código 0 | Los disparos naturales y la recepción dominical completa siguen sin evidencia en este corte; Windows requiere autenticación asistida |
 
-**Nivel del hito:** validación parcial de la restauración externa. El escaneo comprueba la indexación. La descarga autenticada validó un archivo de prueba, no todos los archivos.
-
-**Indicadores operativos por medir:** respaldos disparados por el temporizador que terminaron correctamente / respaldos previstos en una ventana definida, y tiempo desde el inicio de un ensayo hasta que se comprueba el acceso a archivos. Todavía no hay cifras representativas para estos dos indicadores.
+[Ver las pruebas, sus límites y los siguientes hitos](resultados-de-respaldo.md).
 
 ## Infraestructura desplegada
 
@@ -46,6 +47,31 @@ El trabajo ya cubre mucho más que la instalación inicial: el NAS comparte arch
 | Sincronización | Cliente oficial de Nextcloud en Windows, una cuenta y una carpeta | Sincronización bidireccional y archivos bajo demanda probados |
 | Red | Ethernet y firewall nftables | Validados; reglas de acceso mínimas |
 | Laboratorio web | Páginas sencillas para pruebas | Activas para experimentación |
+
+## Catálogo de servicios
+
+El catálogo reúne **16 iniciativas: 3 operativas, 1 implementada y 12 planificadas**. Este recuento se limita al catálogo y no reemplaza el inventario técnico.
+
+| Servicio | Propósito | Estado |
+|---|---|---|
+| Nube privada Nextcloud | Archivos y sincronización | 🟢 Operativo |
+| Sistema de respaldos | Protección y recuperación | 🟢 Implementado |
+| Acceso remoto Tailscale | Conectividad privada segura | 🟢 Operativo |
+| Docker | Infraestructura de contenedores | 🟢 Operativo |
+| Hosting web multiproyecto | Alojar páginas web propias y de terceros | 🔵 Planificado |
+| Primer sitio web de terceros | Desarrollar y alojar el primer sitio de terceros en el NAS | 🔵 Planificado |
+| Servidor SFTP | Transferencia segura de archivos | 🔵 Planificado |
+| Biblioteca de videojuegos | Catálogo y descarga privada | 🔵 Planificado |
+| Servidor multimedia | Películas, música y fotografías | 🔵 Planificado |
+| Gestor de documentos | Digitalización y clasificación | 🔵 Planificado |
+| Servidores de videojuegos | Minecraft y otros juegos compatibles | 🔵 Planificado |
+| Bases de datos | Aplicaciones y proyectos de desarrollo | 🔵 Planificado |
+| Inteligencia artificial local | Modelos y asistentes privados | 🔵 Planificado |
+| Máquinas virtuales | Laboratorios y experimentación | 🔵 Planificado |
+| Monitorización centralizada | Rendimiento y disponibilidad | 🔵 Planificado |
+| Portal de servicios Jokxer | Administración y acceso centralizado | 🔵 Planificado |
+
+El sistema de respaldos está implementado; aún faltan los primeros disparos programados verificados y un ensayo de recuperación desde cero. Las páginas de laboratorio no equivalen a hosting multiproyecto. MariaDB ya funciona para Nextcloud; el servicio de bases de datos para otros proyectos sigue planificado. El servidor de juegos existente es un proyecto aparte y no cuenta como servicio desplegado en este NAS. No hay fecha de lanzamiento ni acceso público anunciado para los servicios planificados.
 
 ## Avances que ya se realizaron
 
@@ -65,19 +91,21 @@ Se desplegaron SMB/NFS, Docker, Nextcloud, MariaDB, Redis y páginas web de prue
 - Se validó una **restauración incremental aislada**: se restauraron la base de datos y los archivos, y se probaron descarga, escritura y eliminación sin alterar producción.
 - Se interrumpió un respaldo de forma controlada y se reinició el NAS. La recuperación devolvió Nextcloud a funcionamiento normal y no dejó una recuperación pendiente.
 - El ciclo terminó correctamente al iniciarlo manualmente mediante systemd. La programación diaria está habilitada; la primera ejecución disparada por el temporizador no completó el respaldo. El ajuste ya se comprobó de forma controlada y con una ejecución manual; falta verificar el temporizador.
-- Se guardó una **copia independiente del NAS** y se comprobó con SHA-256. La integridad del archivo no sustituye una prueba de restauración desde esa copia.
+- Se verificaron copias independientes en Windows con SHA-256, BitLocker y permisos restrictivos. La retención separa las ventanas semanales y mensuales de la copia histórica protegida.
+- Se corrigió la reexportación para poder regenerar la misma instantánea sin cambiar el archivo comprimido en el caso probado. El receptor conserva el control de integridad y evita duplicados.
+- Se respaldaron y volvieron a importar las imágenes de Nextcloud, MariaDB y Redis. Las imágenes y los datos se conservan por separado.
 
 ## Cómo verifico los respaldos
 
 ```mermaid
-flowchart LR
-    A["Respaldo local"] --> B["Verificación SHA-256"]
-    B --> C["Restauración incremental aislada: validada"]
-    B --> D["Copia independiente: verificada"]
-    D --> E["Arranque aislado y escaneo: validados"]
-    E --> F["Lectura autenticada: validada con un archivo"]
-    F --> G["Escritura: pendiente"]
+flowchart TD
+    A["Debian: respaldo interno y retención"] --> B["Exportación semanal reproducible"]
+    B --> C["Windows: recepción asistida, SHA-256 y retención"]
+    C --> D["Prueba aislada anterior: escaneo y operaciones de archivo"]
+    E["Imágenes de Nextcloud, MariaDB y Redis"] --> F["Copia independiente e importación comprobada"]
 ```
+
+La restauración aislada se realizó con una copia anterior. La importación Docker verificó las imágenes en un host existente. Son pruebas distintas.
 
 ## Decisiones de seguridad y estabilidad
 
@@ -91,14 +119,14 @@ flowchart LR
 
 ## Siguiente etapa
 
-1. Confirmar por separado el respaldo interno y la exportación semanal, ambos iniciados por sus respectivos temporizadores.
-2. Cerrar la recepción semanal de extremo a extremo y medir la duración de otro ensayo de recuperación aislado.
-3. Revisar avisos de seguridad y actualizaciones de Nextcloud con una reversión preparada.
-4. Validar permisos SMB/NFS desde los equipos cliente y el acceso remoto tras reinicios.
-5. Diagnosticar el disco de laboratorio de 1 TB cuando cierre esta fase.
+1. Confirmar un disparo exitoso del respaldo interno y otro de la exportación semanal, y verificar la recepción dominical asistida en Windows.
+2. Restaurar Nextcloud en un entorno aislado desde el nuevo formato reproducible y medir el tiempo hasta verificar el acceso.
+3. Ensayar la recuperación completa en un host vacío y evaluar una copia fuera de la ubicación física.
 
-Los servicios futuros —monitorización, snapshots, virtualización y nuevos servidores— son objetivos posteriores, no instalaciones actuales.
+Las validaciones de permisos SMB/NFS, diagnóstico del disco de laboratorio, monitorización y nuevos servicios conservan su alcance anterior.
 
 ## Documentación y alcance
 
-La bitácora técnica y los procedimientos de operación se mantienen en el repositorio privado. Este resumen recoge los resultados y las decisiones que se pueden compartir.
+[Resultados de respaldo](resultados-de-respaldo.md) · [Volver al HomeLab en el perfil de Jokxer8](https://github.com/jokxer8#homelab-y-nas)
+
+La bitácora operativa no forma parte de la publicación. Este resumen no incluye direcciones, rutas internas, identificadores, bitácoras en bruto ni secretos.

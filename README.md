@@ -97,15 +97,13 @@ Se desplegaron SMB/NFS, Docker, Nextcloud, MariaDB, Redis y páginas web de prue
 
 ## Cómo verifico los respaldos
 
-```mermaid
-flowchart TD
-    A["Debian: respaldo interno y retención"] --> B["Exportación semanal reproducible"]
-    B --> C["Windows: recepción asistida, SHA-256 y retención"]
-    C --> D["Prueba aislada anterior: escaneo y operaciones de archivo"]
-    E["Imágenes de Nextcloud, MariaDB y Redis"] --> F["Copia independiente e importación comprobada"]
-```
+![Flujo de respaldo y verificación de Nextcloud y Docker](assets/flujo-verificacion-respaldos.svg)
 
-La restauración aislada se realizó con una copia anterior. La importación Docker verificó las imágenes en un host existente. Son pruebas distintas.
+1. **Debian:** genera las copias internas y aplica la retención.
+2. **Exportación:** al regenerar la misma instantánea en la prueba, el archivo conservó su SHA-256.
+3. **Windows:** recibe la copia con autenticación asistida, verifica su integridad y aplica la retención.
+
+**Pruebas por separado:** la restauración de datos se hizo en un entorno aislado con una copia anterior. Las tres imágenes Docker se importaron en el host existente y se verificaron 36 capas. [Ver resultados y límites](resultados-de-respaldo.md).
 
 ## Decisiones de seguridad y estabilidad
 

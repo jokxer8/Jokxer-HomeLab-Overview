@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="606" viewBox="0 0 680 606" role="img" aria-labelledby="title desc">
+  <title id="title">Cómo verifico los respaldos del Jokxer HomeLab</title>
+  <desc id="desc">Debian crea y retiene copias internas. Se genera una exportación reproducible y Windows la recibe de forma asistida, verifica SHA-256 y aplica retención. La restauración aislada se probó con una copia anterior. Por separado, se respaldaron e importaron tres imágenes Docker y se verificaron 36 capas.</desc>
+  <rect x="1" y="1" width="678" height="604" rx="25" fill="#101b33" stroke="#557496" stroke-width="2"/>
+  <path d="M26 26v41" stroke="#38bdf8" stroke-width="5" stroke-linecap="round"/>
+  <g font-family="DejaVu Sans, Arial, sans-serif">
+    <text x="44" y="39" fill="#7dd3fc" font-size="15" font-weight="700" letter-spacing="2">JOKXER HOMELAB</text>
+    <text x="44" y="68" fill="#f8fafc" font-size="28" font-weight="700">Flujo de respaldo y verificación</text>
+    <rect x="30" y="91" width="620" height="71" rx="13" fill="#163354" stroke="#41678b"/>
+    <rect x="45" y="107" width="40" height="39" rx="9" fill="#7dd3fc"/>
+    <text x="65" y="133" text-anchor="middle" fill="#101b33" font-size="17" font-weight="700">01</text>
+    <text x="102" y="120" fill="#f8fafc" font-size="23" font-weight="700">Respaldo interno · Debian</text>
+    <text x="102" y="145" fill="#d5e6f5" font-size="18">Copias locales y retención programada.</text>
+    <path d="M340 165v10m-4-4 4 4 4-4" fill="none" stroke="#7dd3fc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="30" y="180" width="620" height="71" rx="13" fill="#163354" stroke="#41678b"/>
+    <rect x="45" y="196" width="40" height="39" rx="9" fill="#7dd3fc"/>
+    <text x="65" y="222" text-anchor="middle" fill="#101b33" font-size="17" font-weight="700">02</text>
+    <text x="102" y="209" fill="#f8fafc" font-size="23" font-weight="700">Exportación reproducible</text>
+    <text x="102" y="234" fill="#d5e6f5" font-size="18">Misma instantánea, mismo SHA-256 en la prueba.</text>
+    <path d="M340 254v10m-4-4 4 4 4-4" fill="none" stroke="#7dd3fc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="30" y="269" width="620" height="71" rx="13" fill="#163354" stroke="#41678b"/>
+    <rect x="45" y="285" width="40" height="39" rx="9" fill="#7dd3fc"/>
+    <text x="65" y="311" text-anchor="middle" fill="#101b33" font-size="17" font-weight="700">03</text>
+    <text x="102" y="298" fill="#f8fafc" font-size="23" font-weight="700">Copia independiente · Windows</text>
+    <text x="102" y="323" fill="#d5e6f5" font-size="18">Recepción asistida, verificación y retención.</text>
+    <path d="M30 362h620" stroke="#527292" stroke-width="1"/>
+    <text x="31" y="392" fill="#86efac" font-size="15" font-weight="700" letter-spacing="1.5">DOS PRUEBAS DISTINTAS</text>
+    <rect x="30" y="408" width="620" height="76" rx="13" fill="#133333" stroke="#438176"/>
+    <text x="49" y="438" fill="#ecfdf5" font-size="22" font-weight="700">Recuperación de datos</text>
+    <text x="49" y="464" fill="#d4eee7" font-size="18">Restauración aislada desde una copia anterior.</text>
+    <rect x="30" y="495" width="620" height="82" rx="13" fill="#133333" stroke="#438176"/>
+    <text x="49" y="524" fill="#ecfdf5" font-size="22" font-weight="700">Recuperación de imágenes Docker</text>
+    <text x="49" y="551" fill="#d4eee7" font-size="18">3 imágenes importadas y 36 capas verificadas.</text>
+  </g>
+</svg>

@@ -11,7 +11,7 @@ Caso práctico de infraestructura doméstica: qué implementé, qué probé y qu
 ![Imágenes Docker: 3 protegidas](https://img.shields.io/badge/Docker-3%20im%C3%A1genes%20protegidas-176754?style=for-the-badge)
 ![Automatización: Programada](https://img.shields.io/badge/Automatizaci%C3%B3n-Programada-94520B?style=for-the-badge)
 
-[🏠 Proyecto](#el-proyecto) · [✅ Resultados](#resultados-verificables) · [🧰 Infraestructura](#infraestructura-desplegada) · [🗺️ Catálogo de servicios](#catálogo-de-servicios) · [🗂️ Evidencia y alcance](resultados-de-respaldo.md) · [📍 Próxima etapa](#siguiente-etapa)
+[🏠 Proyecto](#el-proyecto) · [✅ Resultados](#resultados-verificables) · [🧰 Infraestructura](#infraestructura-desplegada) · [🗺️ Catálogo de servicios](#catálogo-de-servicios) · [🗂️ Evidencia y alcance](resultados-de-respaldo.md) · [🌐 Hosting y portal](hosting-web.md) · [📍 Próxima etapa](#siguiente-etapa)
 
 </div>
 
@@ -25,17 +25,19 @@ El trabajo ya cubre mucho más que la instalación inicial: el NAS comparte arch
 
 ## Resultados verificables
 
-**Corte: 25 de noviembre de 2026.** El NAS quedó operativo y preparado para ejecutar los respaldos programados. Se verificó que una exportación regenerada de la misma instantánea era idéntica byte a byte y que Windows podía reanudar el flujo sin descargarla de nuevo.
+**Corte: 26 de noviembre de 2026 · paso 842.3.** El primer respaldo diario de Nextcloud tras los ajustes se ejecutó automáticamente. En hosting, verifiqué una recuperación de muestra, una copia independiente recibida en Windows y la salida HTTPS de la primera portada de terceros. [Ver portada provisional](https://mukien.jokxer.dev/).
 
 | Hito | Resultado comprobado | Alcance |
 |---|---|---|
 | Recuperación desde copia independiente | **142 archivos en 24 carpetas**, sin errores de escaneo; descarga, escritura y eliminación autenticadas | Entorno aislado y archivo de control; no se verificó cada archivo individualmente |
 | Protección de dependencias Docker | **3 de 3 imágenes** respaldadas e importadas; **36 de 36 capas únicas** verificadas con SHA-256 | Importación en el host existente, no recuperación desde cero |
-| Respaldo programado | Temporizadores activos en Debian; tarea de Windows iniciada manualmente desde el Programador, con bitácora y código 0 | Los disparos naturales y la recepción dominical completa siguen sin evidencia en este corte; Windows requiere autenticación asistida |
+| Respaldo programado | Primer respaldo diario de Nextcloud validado tras los ajustes; tarea de Windows ensayada de forma asistida | Faltan los disparos programados del hosting y las exportaciones semanales |
 
 [Ver las pruebas, sus límites y los siguientes hitos](resultados-de-respaldo.md).
 
 ## Infraestructura desplegada
+
+El HomeLab tiene dos equipos. **Debian** concentra almacenamiento, Nextcloud, respaldos, hosting y servicios ligeros. **AnduinOS** queda asignado a servidores de juegos, virtualización, IA local y multimedia; la asignación no equivale a que todos esos servicios estén desplegados.
 
 | Área | Implementación | Estado |
 |---|---|---|
@@ -50,7 +52,7 @@ El trabajo ya cubre mucho más que la instalación inicial: el NAS comparte arch
 
 ## Catálogo de servicios
 
-El catálogo reúne **16 iniciativas: 3 operativas, 1 implementada y 12 planificadas**. Este recuento se limita al catálogo y no reemplaza el inventario técnico.
+El catálogo reúne **16 iniciativas: 3 operativas, 1 implementada, 2 en validación y 10 planificadas**. Este recuento se limita al catálogo y no reemplaza el inventario técnico.
 
 | Servicio | Propósito | Estado |
 |---|---|---|
@@ -58,20 +60,20 @@ El catálogo reúne **16 iniciativas: 3 operativas, 1 implementada y 12 planific
 | Sistema de respaldos | Protección y recuperación | 🟢 Implementado |
 | Acceso remoto Tailscale | Conectividad privada segura | 🟢 Operativo |
 | Docker | Infraestructura de contenedores | 🟢 Operativo |
-| Hosting web multiproyecto | Alojar páginas web propias y de terceros | 🔵 Planificado |
-| Primer sitio web de terceros | Desarrollar y alojar el primer sitio de terceros en el NAS | 🔵 Planificado |
+| Hosting web multiproyecto | Alojar páginas web propias y de terceros | 🟡 Piloto validado |
+| [Primer sitio web de terceros](https://mukien.jokxer.dev/) | Portal académico alojado en el NAS | 🟡 Portada provisional publicada |
 | Servidor SFTP | Transferencia segura de archivos | 🔵 Planificado |
 | Biblioteca de videojuegos | Catálogo y descarga privada | 🔵 Planificado |
-| Servidor multimedia | Películas, música y fotografías | 🔵 Planificado |
+| Servidor multimedia | Películas, música y fotografías  (AnduinOS) | 🔵 Planificado |
 | Gestor de documentos | Digitalización y clasificación | 🔵 Planificado |
-| Servidores de videojuegos | Minecraft y otros juegos compatibles | 🔵 Planificado |
+| Servidores de videojuegos | Minecraft y otros juegos compatibles  (AnduinOS) | 🔵 Planificado |
 | Bases de datos | Aplicaciones y proyectos de desarrollo | 🔵 Planificado |
-| Inteligencia artificial local | Modelos y asistentes privados | 🔵 Planificado |
-| Máquinas virtuales | Laboratorios y experimentación | 🔵 Planificado |
+| Inteligencia artificial local | Modelos y asistentes privados  (AnduinOS) | 🔵 Planificado |
+| Máquinas virtuales | Laboratorios y experimentación  (AnduinOS) | 🔵 Planificado |
 | Monitorización centralizada | Rendimiento y disponibilidad | 🔵 Planificado |
 | Portal de servicios Jokxer | Administración y acceso centralizado | 🔵 Planificado |
 
-El sistema de respaldos está implementado; aún faltan los primeros disparos programados verificados y un ensayo de recuperación desde cero. Las páginas de laboratorio no equivalen a hosting multiproyecto. MariaDB ya funciona para Nextcloud; el servicio de bases de datos para otros proyectos sigue planificado. El servidor de juegos existente es un proyecto aparte y no cuenta como servicio desplegado en este NAS. No hay fecha de lanzamiento ni acceso público anunciado para los servicios planificados.
+El primer respaldo diario de Nextcloud ya está validado. El hosting multiproyecto tiene un piloto y una primera portada provisional de terceros; aún no representa una plataforma multiproyecto en producción. MariaDB ya funciona para Nextcloud; ofrecer bases de datos a otros proyectos sigue planificado. El portal central Jokxer sigue planificado y no es la portada académica.
 
 ## Avances que ya se realizaron
 
@@ -90,10 +92,16 @@ Se desplegaron SMB/NFS, Docker, Nextcloud, MariaDB, Redis y páginas web de prue
 - El ciclo de respaldo comprueba la integridad con SHA-256, impide ejecuciones simultáneas y evita escribir cuando faltan montajes requeridos.
 - Se validó una **restauración incremental aislada**: se restauraron la base de datos y los archivos, y se probaron descarga, escritura y eliminación sin alterar producción.
 - Se interrumpió un respaldo de forma controlada y se reinició el NAS. La recuperación devolvió Nextcloud a funcionamiento normal y no dejó una recuperación pendiente.
-- El ciclo terminó correctamente al iniciarlo manualmente mediante systemd. La programación diaria está habilitada; la primera ejecución disparada por el temporizador no completó el respaldo. El ajuste ya se comprobó de forma controlada y con una ejecución manual; falta verificar el temporizador.
+- El primer disparo diario posterior a los ajustes terminó con éxito el 26 de noviembre. Se verificaron SHA-256 y salida del modo de mantenimiento. La exportación semanal y la recepción asistida se validan por separado.
 - Se verificaron copias independientes en Windows con SHA-256, BitLocker y permisos restrictivos. La retención separa las ventanas semanales y mensuales de la copia histórica protegida.
 - Se corrigió la reexportación para poder regenerar la misma instantánea sin cambiar el archivo comprimido en el caso probado. El receptor conserva el control de integridad y evita duplicados.
 - Se respaldaron y volvieron a importar las imágenes de Nextcloud, MariaDB y Redis. Las imágenes y los datos se conservan por separado.
+
+### 4. Piloto de hosting y primer portal
+
+- Nginx sirvió el sitio de muestra y la portada de la Dra. Mu-kien Sang Ben. Solo la portada provisional se publicó por el túnel HTTPS; Nextcloud siguió privado.
+- El sitio de muestra se restauró en Nginx aislado con HTTP 200 y contenido idéntico. El respaldo integral que incluye la portada provisional llegó a Windows con SHA-256 coincidente, en una ejecución asistida.
+- Se validó y aplicó la recarga atómica del firewall conservando las reglas de acceso. La prueba posterior desde un cliente Windows dejó pendiente aclarar su conectividad SSH. [Resultados de hosting](hosting-web.md) · [Caso del portal](https://github.com/jokxer8/Portal-Mukien-Sang-Ben-Overview).
 
 ## Cómo verifico los respaldos
 
@@ -117,13 +125,15 @@ Se desplegaron SMB/NFS, Docker, Nextcloud, MariaDB, Redis y páginas web de prue
 
 ## Siguiente etapa
 
-1. Confirmar un disparo exitoso del respaldo interno y otro de la exportación semanal, y verificar la recepción dominical asistida en Windows.
+1. Confirmar el primer respaldo diario de hosting, los disparos de ambas exportaciones semanales y sus recepciones asistidas en Windows.
 2. Restaurar Nextcloud en un entorno aislado desde el nuevo formato reproducible y medir el tiempo hasta verificar el acceso.
 3. Ensayar la recuperación completa en un host vacío y evaluar una copia fuera de la ubicación física.
 
 Las validaciones de permisos SMB/NFS, diagnóstico del disco de laboratorio, monitorización y nuevos servicios conservan su alcance anterior.
 
 ## Documentación y alcance
+
+[Portada provisional de la Dra. Sang Ben](https://mukien.jokxer.dev/) · [Caso del portal](https://github.com/jokxer8/Portal-Mukien-Sang-Ben-Overview)
 
 [Resultados de respaldo](resultados-de-respaldo.md) · [Volver al HomeLab en el perfil de Jokxer8](https://github.com/jokxer8#homelab-y-nas)
 

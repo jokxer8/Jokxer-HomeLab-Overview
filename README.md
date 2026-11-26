@@ -13,6 +13,8 @@ Caso práctico de infraestructura doméstica: qué implementé, qué probé y qu
 
 [🏠 Proyecto](#el-proyecto) · [✅ Resultados](#resultados-verificables) · [🧰 Infraestructura](#infraestructura-desplegada) · [🗺️ Catálogo de servicios](#catálogo-de-servicios) · [🗂️ Evidencia y alcance](resultados-de-respaldo.md) · [🌐 Hosting y portal](hosting-web.md) · [📍 Próxima etapa](#siguiente-etapa)
 
+**Ruta de lectura:** [Plan maestro](PLAN-MAESTRO.md) · [En palabras simples](EN-PALABRAS-SIMPLES.md)
+
 </div>
 
 ## El proyecto
@@ -101,7 +103,7 @@ Se desplegaron SMB/NFS, Docker, Nextcloud, MariaDB, Redis y páginas web de prue
 
 - Nginx sirvió el sitio de muestra y la portada de la Dra. Mu-kien Sang Ben. Solo la portada provisional se publicó por el túnel HTTPS; Nextcloud siguió privado.
 - El sitio de muestra se restauró en Nginx aislado con HTTP 200 y contenido idéntico. El respaldo integral que incluye la portada provisional llegó a Windows con SHA-256 coincidente, en una ejecución asistida.
-- Se validó y aplicó la recarga atómica del firewall conservando las reglas de acceso. La prueba posterior desde un cliente Windows dejó pendiente aclarar su conectividad SSH. [Resultados de hosting](hosting-web.md) · [Caso del portal](https://github.com/jokxer8/Portal-Mukien-Sang-Ben-Overview).
+- Se validó y aplicó la recarga atómica del firewall conservando las reglas de acceso. El sondeo desde el cliente Windows autorizado confirmó conectividad TCP a SSH y HTTPS por la red local; los servicios internos ensayados permanecieron aislados. [Resultados de hosting](hosting-web.md) · [Caso del portal](https://github.com/jokxer8/Portal-Mukien-Sang-Ben-Overview).
 
 ## Cómo verifico los respaldos
 

@@ -11,7 +11,7 @@ Caso práctico de infraestructura doméstica: qué implementé, qué probé y qu
 ![Imágenes Docker: 3 protegidas](https://img.shields.io/badge/Docker-3%20im%C3%A1genes%20protegidas-176754?style=for-the-badge)
 ![Automatización: Programada](https://img.shields.io/badge/Automatizaci%C3%B3n-Programada-94520B?style=for-the-badge)
 
-[🏠 Proyecto](#el-proyecto) · [✅ Resultados](#resultados-verificables) · [🧰 Infraestructura](#infraestructura-desplegada) · [🗺️ Catálogo de servicios](#catálogo-de-servicios) · [🗂️ Evidencia y alcance](resultados-de-respaldo.md) · [🌐 Hosting y portal](hosting-web.md) · [📍 Próxima etapa](#siguiente-etapa)
+[🏠 Proyecto](#el-proyecto) · [✅ Resultados](#resultados-verificables) · [🧰 Infraestructura](#infraestructura-desplegada) · [🗺️ Catálogo de servicios](#catálogo-de-servicios) · [🗂️ Evidencia y alcance](resultados-de-respaldo.md) · [🌐 Hosting y portal](hosting-web.md) · [📊 Control Center](control-center.md) · [📍 Próxima etapa](#siguiente-etapa)
 
 **Ruta de lectura:** [Plan Maestro](PLAN-MAESTRO.md) · [En palabras simples](EN-PALABRAS-SIMPLES.md)
 
@@ -29,7 +29,7 @@ El trabajo ya cubre mucho más que la instalación inicial: el NAS comparte arch
 
 ## Resultados verificables
 
-**Corte: 26 de noviembre de 2026 · paso 842.3.** El primer respaldo diario de Nextcloud tras los ajustes se ejecutó automáticamente. En hosting, verifiqué una recuperación de muestra, una copia independiente recibida en Windows y la salida HTTPS de la primera portada de terceros. [Ver portada provisional](https://mukien.jokxer.dev/).
+**Operación y recuperación · 26 de noviembre de 2026.** El primer respaldo diario de Nextcloud tras los ajustes se ejecutó automáticamente. En hosting, verifiqué una recuperación de muestra, una copia independiente recibida en Windows y la salida HTTPS de la primera portada de terceros. [Ver portada provisional](https://mukien.jokxer.dev/).
 
 | Hito | Resultado comprobado | Alcance |
 |---|---|---|
@@ -37,7 +37,9 @@ El trabajo ya cubre mucho más que la instalación inicial: el NAS comparte arch
 | Protección de dependencias Docker | **3 de 3 imágenes** respaldadas e importadas; **36 de 36 capas únicas** verificadas con SHA-256 | Importación en el host existente, no recuperación desde cero |
 | Respaldo programado | Primer respaldo diario de Nextcloud validado tras los ajustes; tarea de Windows ensayada de forma asistida | Faltan los disparos programados del hosting y las exportaciones semanales |
 
-[Ver las pruebas, sus límites y los siguientes hitos](resultados-de-respaldo.md).
+[Ver las pruebas de respaldo y sus límites](resultados-de-respaldo.md).
+
+**Control Center · 27 de noviembre de 2026, 19:19 AST.** El prototipo de monitorización ya cuenta con reglas de inventario y seguimiento histórico implementadas. En un laboratorio aislado, las suites superaron **75 comprobaciones del contrato de inventario** y **133 del seguimiento adaptativo**. Estos resultados validan componentes, no un tablero operativo ni mediciones continuas. [Ver qué se probó y qué falta](control-center.md).
 
 ## Infraestructura desplegada
 
@@ -56,7 +58,7 @@ El HomeLab tiene dos equipos. **Debian** concentra almacenamiento, Nextcloud, re
 
 ## Catálogo de servicios
 
-El catálogo reúne **16 iniciativas: 3 operativas, 1 implementada, 2 en validación y 10 planificadas**. Este recuento se limita al catálogo y no reemplaza el inventario técnico.
+El catálogo reúne **16 iniciativas: 3 operativas, 1 implementada, 2 en validación, 1 en desarrollo y 9 planificadas**. Este recuento se limita al catálogo y no reemplaza el inventario técnico.
 
 | Servicio | Propósito | Estado |
 |---|---|---|
@@ -74,7 +76,7 @@ El catálogo reúne **16 iniciativas: 3 operativas, 1 implementada, 2 en validac
 | Bases de datos | Aplicaciones y proyectos de desarrollo | 🔵 Planificado |
 | Inteligencia artificial local | Modelos y asistentes privados  (AnduinOS) | 🔵 Planificado |
 | Máquinas virtuales | Laboratorios y experimentación  (AnduinOS) | 🔵 Planificado |
-| Monitorización centralizada | Rendimiento y disponibilidad | 🔵 Planificado |
+| [Monitorización centralizada](control-center.md) | Rendimiento, disponibilidad e historial | 🟡 En desarrollo; componentes probados |
 | Portal de servicios Jokxer | Administración y acceso centralizado | 🔵 Planificado |
 
 El primer respaldo diario de Nextcloud ya está validado. El hosting multiproyecto tiene un piloto y una primera portada provisional de terceros; aún no representa una plataforma multiproyecto en producción. MariaDB ya funciona para Nextcloud; ofrecer bases de datos a otros proyectos sigue planificado. El portal central Jokxer sigue planificado y no es la portada académica.
@@ -133,7 +135,9 @@ Se desplegaron SMB/NFS, Docker, Nextcloud, MariaDB, Redis y páginas web de prue
 2. Restaurar Nextcloud en un entorno aislado desde el nuevo formato reproducible y medir el tiempo hasta verificar el acceso.
 3. Ensayar la recuperación completa en un host vacío y evaluar una copia fuera de la ubicación física.
 
-Las validaciones de permisos SMB/NFS, diagnóstico del disco de laboratorio, monitorización y nuevos servicios conservan su alcance anterior.
+4. Preparar una primera vista privada y de solo lectura del Control Center, con pocos indicadores útiles, última actualización y una tendencia. Validar que los datos ausentes no se presenten como fallos. [Criterio de cierre de la primera versión](control-center.md#primera-versión-visible).
+
+Las pruebas de permisos SMB/NFS, el diagnóstico del disco de laboratorio y los nuevos servicios conservan su alcance anterior.
 
 ## Documentación y alcance
 

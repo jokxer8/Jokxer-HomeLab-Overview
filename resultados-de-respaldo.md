@@ -32,4 +32,17 @@ Los registros diario, semanal y mensual del primer archivo local de hosting comp
 
 Los indicadores de operación pendientes son **ejecuciones programadas exitosas / previstas** en un periodo definido y **tiempo de recuperación** hasta comprobar acceso autenticado a archivos. Las pruebas manuales no se cuentan como disparos automáticos.
 
+## Evidencia para cerrar una ejecución programada
+
+Registra estos puntos para **la misma ejecución**. Un servicio puede mostrar éxito de un ensayo anterior aunque el temporizador de hoy todavía no haya disparado.
+
+| Qué comprobar | Qué anotar | Qué no demuestra por sí solo |
+|---|---|---|
+| Disparo programado | Fecha, hora y origen del disparo; si ocurrió tras una demora, anotarla. | Que el respaldo terminó. |
+| Resultado del servicio | Fin de la ejecución y resultado, asociados al mismo disparo. | Que el archivo llegó a otro equipo. |
+| Integridad del archivo | Identificador de la copia y coincidencia de SHA-256 con su manifiesto. | Que se puede restaurar un servicio. |
+| Recepción en Windows, si aplica | Hora de recepción, archivo local verificado y si hubo ayuda para autenticarse. | Que la recepción fue desatendida cuando se necesitó intervención. |
+
+Si falta una evidencia, marca ese punto como **sin comprobar**. Este criterio complementa los estados de solo lectura del [Control Center](control-center.md); no cambia el corte de los resultados anteriores.
+
 [Volver a resultados en la portada](README.md#resultados-verificables)

@@ -39,7 +39,7 @@ El trabajo ya cubre mucho más que la instalación inicial: el NAS comparte arch
 
 [Ver las pruebas de respaldo y sus límites](resultados-de-respaldo.md).
 
-**Control Center · 27 de noviembre de 2026, 19:19 AST.** El prototipo de monitorización ya cuenta con reglas de inventario y seguimiento histórico implementadas. En un laboratorio aislado, las suites superaron **75 comprobaciones del contrato de inventario** y **133 del seguimiento adaptativo**. Estos resultados validan componentes, no un tablero operativo ni mediciones continuas. [Ver qué se probó y qué falta](control-center.md).
+**Control Center · 27 de noviembre de 2026, 19:20 AST.** El prototipo de monitorización ya cuenta con reglas de inventario y seguimiento histórico implementadas. En un laboratorio aislado, las suites superaron **75 comprobaciones del contrato de inventario** y **133 del seguimiento adaptativo**, además de **20 de integración** y **19 de capacidad**. Estos resultados validan componentes, no un tablero operativo ni mediciones continuas. [Ver qué se probó y qué falta](control-center.md).
 
 ## Infraestructura desplegada
 

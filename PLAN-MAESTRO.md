@@ -8,7 +8,7 @@ Reutilizar equipos para aprender a operar una nube privada, recuperar datos y al
 
 ## Estado actual
 
-**Corte de monitorización: 27 de noviembre de 2026, 19:19 AST.** El Control Center pasó del diseño a componentes de inventario y seguimiento histórico probados en laboratorio. No se ha confirmado un tablero desplegado, una base de producción activa ni una recolección programada. La evidencia de operación, recuperación y hosting del 26 de noviembre se mantiene diferenciada: Nextcloud y el acceso privado operativos, recuperación aislada probada y portada pública provisional.
+**Corte de monitorización: 27 de noviembre de 2026, 19:20 AST.** El Control Center pasó del diseño a componentes de inventario y seguimiento histórico probados en laboratorio. No se ha confirmado un tablero desplegado, una base de producción activa ni una recolección programada. La evidencia de operación, recuperación y hosting del 26 de noviembre se mantiene diferenciada: Nextcloud y el acceso privado operativos, recuperación aislada probada y portada pública provisional.
 
 ## Historia y decisiones por fase
 
@@ -39,7 +39,7 @@ Reutilizar equipos para aprender a operar una nube privada, recuperar datos y al
 - **Programación:** un respaldo diario de Nextcloud completado en 41 segundos tras el ajuste. Es un evento observado, no una tasa de éxito ni evidencia de que los otros ciclos se hayan ejecutado en horario. [Resultados](resultados-de-respaldo.md).
 - **Hosting:** un sitio de muestra restaurado respondió HTTP 200 y devolvió el mismo contenido. La portada provisional se verificó por HTTPS; su restauración específica todavía no se dio por cerrada. [Hosting](hosting-web.md).
 
-- **Monitorización:** 75 comprobaciones del contrato de inventario y 133 del seguimiento adaptativo superadas en suites separadas. Son resultados de laboratorio, no sensores desplegados ni disponibilidad medida. [Resultados y límites del Control Center](control-center.md).
+- **Monitorización:** 75 comprobaciones del contrato de inventario, 133 del seguimiento adaptativo, 20 de integración y 19 de capacidad, superadas en suites separadas. Son resultados de laboratorio, no sensores desplegados ni disponibilidad medida. [Resultados y límites del Control Center](control-center.md).
 
 ## Pendientes priorizados y próximos hitos
 

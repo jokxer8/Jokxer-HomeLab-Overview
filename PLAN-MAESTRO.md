@@ -8,7 +8,7 @@ Reutilizar equipos para aprender a operar una nube privada, recuperar datos y al
 
 ## Estado actual
 
-**Corte de monitorización: 27 de noviembre de 2026, 19:20 AST.** El Control Center pasó del diseño a componentes de inventario y seguimiento histórico probados en laboratorio. No se ha confirmado un tablero desplegado, una base de producción activa ni una recolección programada. La evidencia de operación, recuperación y hosting del 26 de noviembre se mantiene diferenciada: Nextcloud y el acceso privado operativos, recuperación aislada probada y portada pública provisional.
+**Corte de monitorización: 27 de noviembre de 2026, 21:31 AST.** La interfaz se puede recorrer en desarrollo y la API privada de Debian respondió a consultas de monitorización e histórico. Falta validar el despliegue definitivo del frontend por HTTPS privado, su aislamiento de Internet y el funcionamiento sostenido. Nextcloud, la recuperación aislada y la portada pública provisional conservan su evidencia y alcance por separado.
 
 ## Historia y decisiones por fase
 
@@ -18,7 +18,7 @@ Reutilizar equipos para aprender a operar una nube privada, recuperar datos y al
 | Nube privada | Desplegué Nextcloud, probé acceso autorizado y ejercité la sincronización en un escenario acotado. | Completar pruebas con más clientes de compartición. |
 | Respaldo y recuperación | Incorporé controles de integridad, una copia independiente y restauraciones aisladas. Corregí una colisión de tareas y observé un disparo diario de Nextcloud tras el ajuste. | Verificar exportación y recepción semanales en su horario y ensayar la recuperación con el formato reproducible. |
 | Hosting ligero | Separé los sitios de prueba, restauré una muestra y publiqué la primera portada de terceros por HTTPS. | Probar el respaldo de hosting en horario y la restauración específica del portal. |
-| Control Center (monitorización) | Implementé reglas que distinguen disponibilidad, inventario y evidencia de ausencia. Las comprobé con un historial aislado. | Integrar un tablero privado de solo lectura y probarlo con datos autorizados. |
+| Control Center (monitorización) | Interfaz navegable de solo lectura en desarrollo; consultas de monitorización, alertas e histórico comprobadas en la API privada. | Validar el acceso privado por HTTPS y demostrar estados normal, fallido y sin datos. [Ver la interfaz](control-center.md#vista-del-aplicativo). |
 | Nuevos servicios | Definí un [catálogo por estado](README.md#catálogo-de-servicios). | Priorizar y probar antes de desplegar. No se ha trasladado Jokxer.dev al NAS. |
 
 ## Tecnologías y para qué las uso
@@ -29,7 +29,8 @@ Reutilizar equipos para aprender a operar una nube privada, recuperar datos y al
 | Tailscale | Entrar a Nextcloud por una red privada desde equipos autorizados. No es la vía para visitar la portada pública. |
 | Nginx y Cloudflare Tunnel | Servir páginas aisladas y publicar por HTTPS solo la portada provisional del portal académico, sin hacer pública la nube privada. [Caso de hosting](hosting-web.md). |
 | Resend | Enviar correo transaccional desde Nextcloud; consta una prueba de envío, no una medición sostenida de entregabilidad. |
-| SQLite (laboratorio del Control Center) | Probar el historial de mediciones, integridad referencial, reversión de cambios y manejo de observaciones caducadas sin afectar los datos definitivos. |
+| SQLite (Control Center) | Guardar y consultar el histórico. Se probó primero en laboratorio y después respondió el estado del motor en el NAS; aún falta comprobar operación sostenida. |
+| React, TypeScript, Vite y Recharts | Presentar indicadores, vistas de servicios y series de tiempo en un tablero de solo lectura. |
 | systemd y SHA-256 | Programar trabajos y comprobar la integridad de los archivos de respaldo. Una copia íntegra aún debe probarse en una restauración. |
 
 ## Resultados y evidencia
@@ -45,7 +46,7 @@ Reutilizar equipos para aprender a operar una nube privada, recuperar datos y al
 
 1. **Medir la automatización real.** Registrar por separado los disparos de hosting y exportación semanal, los resultados y la recepción de copias verificadas.
 2. **Ampliar las pruebas de recuperación.** Recuperar el sitio provisional y repetir la prueba de Nextcloud con la copia reproducible, en un entorno aislado.
-3. **Entregar una primera vista privada de solo lectura.** Mostrar espacio disponible, estado del último respaldo y disponibilidad de servicios, con la hora de la última lectura y una tendencia sencilla. El tablero no está desplegado.
+3. **Validar la primera entrega por HTTPS privado.** Servir el tablero desde el acceso autorizado, probar que no responda desde Internet y cotejar hora de observación, tendencia y estados. Añadir la evidencia de la última copia verificada sin confundirla con el disparo del temporizador.
 4. **Evaluar la expansión.** Revisar capacidad, acceso, copia independiente y reversión antes de activar cualquier nuevo servicio.
 
 ## Sugerencias

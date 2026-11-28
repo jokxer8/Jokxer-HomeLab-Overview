@@ -17,3 +17,11 @@ En la restauración documentada de este HomeLab, la aplicación escaneó 142 arc
 - **¿Para qué?** Para distinguir qué produjo el trabajo y si el horario configurado realmente lo activó.
 - **¿Cómo?** Compara la hora del disparo programado con el resultado registrado y el archivo que produjo. [Ver los dos tipos de prueba](resultados-de-respaldo.md).
 - **¿Cuándo usarlo?** Al configurar un horario nuevo o investigar si se ejecutó un respaldo concreto.
+
+
+## 3. Leer el panel sin confundir una alerta con falta de datos
+
+- **¿Por qué?** Un dispositivo puede funcionar aunque no haya enviado una lectura reciente.
+- **¿Para qué?** Para decidir si hace falta atender un fallo o confirmar la lectura antes de actuar.
+- **¿Cómo?** Abre la [captura de demostración](control-center.md#vista-del-aplicativo). Ubica la hora de captura y compara una advertencia con un estado desconocido. La advertencia aporta una señal que puedes investigar; el estado desconocido pide comprobar la fuente y su antigüedad antes de sacar conclusiones.
+- **¿Cuándo usarlo?** Cuando falte un dato en el panel o aparezca una alerta que no sabes interpretar. La captura es un ejercicio: no necesitas acceder al NAS.

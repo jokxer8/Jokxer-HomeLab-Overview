@@ -39,7 +39,11 @@ El trabajo ya cubre mucho más que la instalación inicial: el NAS comparte arch
 
 [Ver las pruebas de respaldo y sus límites](resultados-de-respaldo.md).
 
-**Control Center · 27 de noviembre de 2026, 19:20 AST.** El prototipo de monitorización ya cuenta con reglas de inventario y seguimiento histórico implementadas. En un laboratorio aislado, las suites superaron **75 comprobaciones del contrato de inventario** y **133 del seguimiento adaptativo**, además de **20 de integración** y **19 de capacidad**. Estos resultados validan componentes, no un tablero operativo ni mediciones continuas. [Ver qué se probó y qué falta](control-center.md).
+**Control Center · 27 de noviembre de 2026, 21:31 AST.** La interfaz de solo lectura ya muestra tarjetas de recursos, tendencia de CPU, alertas y una vista de Nextcloud. En Debian, la API privada devolvió datos de monitorización, alertas y una serie histórica. Son avances distintos: el despliegue definitivo del panel sigue pendiente. [Ver capturas, pruebas y siguiente hito](control-center.md#vista-del-aplicativo).
+
+[![Vista de demostración del Control Center, con gráfico de CPU, indicadores y alertas.](assets/control-center/panel-general.png)](control-center.md#vista-del-aplicativo)
+
+*Interfaz real con datos simulados; no muestra datos operativos del NAS.*
 
 ## Infraestructura desplegada
 
@@ -135,7 +139,7 @@ Se desplegaron SMB/NFS, Docker, Nextcloud, MariaDB, Redis y páginas web de prue
 2. Restaurar Nextcloud en un entorno aislado desde el nuevo formato reproducible y medir el tiempo hasta verificar el acceso.
 3. Ensayar la recuperación completa en un host vacío y evaluar una copia fuera de la ubicación física.
 
-4. Preparar una primera vista privada y de solo lectura del Control Center, con pocos indicadores útiles, última actualización y una tendencia. Validar que los datos ausentes no se presenten como fallos. [Criterio de cierre de la primera versión](control-center.md#primera-versión-visible).
+4. Publicar el Control Center solo dentro de la red privada y por HTTPS, comprobar que no sea accesible desde Internet y cotejar en pantalla datos vigentes, fallos y falta de señal. [Criterio de cierre](control-center.md#primera-versión-visible).
 
 Las pruebas de permisos SMB/NFS, el diagnóstico del disco de laboratorio y los nuevos servicios conservan su alcance anterior.
 

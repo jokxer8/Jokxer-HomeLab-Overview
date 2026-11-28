@@ -25,3 +25,10 @@ En la restauración documentada de este HomeLab, la aplicación escaneó 142 arc
 - **¿Para qué?** Para decidir si hace falta atender un fallo o confirmar la lectura antes de actuar.
 - **¿Cómo?** Abre la [captura de demostración](control-center.md#vista-del-aplicativo). Ubica la hora de captura y compara una advertencia con un estado desconocido. La advertencia aporta una señal que puedes investigar; el estado desconocido pide comprobar la fuente y su antigüedad antes de sacar conclusiones.
 - **¿Cuándo usarlo?** Cuando falte un dato en el panel o aparezca una alerta que no sabes interpretar. La captura es un ejercicio: no necesitas acceder al NAS.
+
+## 4. Leer una tendencia con huecos
+
+- **¿Por qué?** Un intervalo sin lectura no dice si el valor fue alto, bajo o cero.
+- **¿Para qué?** Para distinguir cobertura de comportamiento: el gráfico puede representar bien los datos que sí recibió sin contar toda la historia.
+- **¿Cómo?** Imagina que pides 24 horas y solo hay 36 de 288 bloques de cinco minutos con datos. Describe la tendencia solo dentro de los bloques observados y anota que el resto está sin evaluar. [Ver cómo se agrupan las lecturas](control-center.md#cómo-se-lee-el-histórico).
+- **¿Cuándo usarlo?** Cuando acabas de encender un monitor, detienes la captura o eliges un período mayor que el histórico disponible.

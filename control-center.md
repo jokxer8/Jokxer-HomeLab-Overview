@@ -2,7 +2,7 @@
 
 [Inicio](README.md) · [Plan Maestro](PLAN-MAESTRO.md) · [Respaldos](resultados-de-respaldo.md) · [Hosting](hosting-web.md)
 
-**Corte:** 27 de noviembre de 2026, 21:31 AST. **Estado:** interfaz de desarrollo y API privada comprobadas por separado; despliegue privado definitivo pendiente.
+**Corte:** 27 de noviembre de 2026, 22:52 AST. **Estado:** 11 vistas iniciales en desarrollo; explorador histórico y diagnóstico avanzado de hardware, almacenamiento y red incorporados. API observada en Debian; despliegue privado definitivo pendiente.
 
 ## Vista del aplicativo
 
@@ -19,6 +19,33 @@
 ![Vista de nube privada con estado de Nextcloud, latencia y código de respuesta.](assets/control-center/nube-privada.png)
 
 *La segunda captura también usa datos simulados. Ninguna imagen contiene cuentas, rutas ni direcciones del NAS real.*
+
+![Explorador de métricas del Control Center con filtros, período de seis horas y gráfico en intervalos de cinco minutos.](assets/control-center/historial-demo.png)
+
+*Explorador real con una sola métrica de demostración. La curva, sus huecos y el recuento de la imagen son simulados; las pruebas del catálogo real se describen abajo.*
+
+## Avance de la fase 850
+
+| Módulo | Qué permite ver | Evidencia y límites |
+|---|---|---|
+| **Respaldos** | Inventario, retención, horarios y evidencia de protección externa. | La vista distingue estructura, integridad y recepción. Ver una copia inventariada no significa que el panel haya comprobado su huella o restaurado el contenido. |
+| **Historial** | Filtrar por categoría, componente e indicador; comparar períodos de 1 h a 30 días. | Catálogo comprobado: **219 métricas en 9 categorías**. El selector admite 30 días, pero no garantiza que existan 30 días de datos. |
+| **Hardware** | Diagnóstico de CPU, RAM, SWAP, temperatura, batería y alimentación, con tendencias disponibles. | Integra umbrales solo cuando hay información que los respalda. Un sensor sin lectura no se presenta como avería. |
+| **Almacenamiento** | Capacidad de los volúmenes, reserva LVM, diagnóstico SMART, aislamiento y tendencias. | En una consulta de 24 h hubo datos en **36 de 288 ventanas**. El resto no se interpreta como cero. Una lectura SMART favorable tampoco garantiza la salud futura. |
+| **Red y conectividad** | Enlace negociado, tráfico observado, interfaces, contadores y tendencias. | Vista integrada en desarrollo. Una tasa de transferencia no es un test de Internet; un contador acumulado distinto de cero no confirma un fallo actual. |
+| **Hosting** | Monitorización de sitios, respuesta HTTP y comprobaciones TLS cuando hay datos. | La vista de monitorización funciona en desarrollo. El sitio privado de prueba aún no ha sido sustituido por el Control Center y falta su automonitorización. |
+
+Las **11 vistas iniciales** son Panel general, Hardware, Almacenamiento, Red, Servicios, Docker, Nextcloud, Hosting, Respaldos, Alertas e Historial. Que estén implementadas no equivale a que las ampliaciones de todos los módulos hayan terminado ni a que el sitio esté en producción.
+
+### Cómo se lee el histórico
+
+| Período elegido | Resolución de consulta | Qué debe interpretar el lector |
+|---|---|---|
+| 1 hora | Mediciones originales | Cada punto representa una lectura, con su calidad. |
+| 6 o 24 horas | Ventanas cerradas de 5 minutos | El promedio, mínimo y máximo se muestran si corresponden al tipo de métrica. |
+| 7 o 30 días | Ventanas cerradas de 1 hora | El rango es el solicitado; los huecos indican falta de cobertura, no inactividad. |
+
+La compilación local superó ESLint, comprobación de tipos y build de Vite. Todavía queda reducir el tamaño de descarga y comprobar el comportamiento del aplicativo en su entorno privado final.
 
 ## Qué problema resuelve
 
@@ -45,8 +72,8 @@ Estas pruebas se hicieron antes de la validación de la API y no demuestran oper
 
 ## Primera versión visible
 
-La interfaz disponible en desarrollo usa React, TypeScript y Vite; presenta un menú lateral por áreas, tarjetas de estado y una gráfica de CPU con Recharts. Consulta una API FastAPI de solo lectura; en el NAS se observó el motor SQLite en ejecución durante una comprobación puntual. La vista de alojamiento todavía puede mostrar una página de prueba: no acredita que el panel ya esté servido en su destino final.
+La interfaz disponible en desarrollo usa React, TypeScript y Vite; presenta un menú lateral por áreas, tarjetas de estado y una gráfica de CPU con Recharts. Consulta una API FastAPI de solo lectura; en el NAS se observó el motor SQLite en ejecución durante una comprobación puntual. La monitorización de alojamiento y el despliegue del panel son hitos separados: el sitio de prueba sigue presente.
 
-**Siguiente hito:** servir la interfaz por HTTPS desde la red privada autorizada, comprobar que la API y el frontend no respondan desde Internet y cotejar estados normales, fallos confirmados y datos no evaluados. Después, validar operación sostenida y el indicador de último respaldo verificado. El portal externo y las copias del NAS se validan por separado.
+**Siguiente hito:** servir la interfaz por HTTPS desde la red privada autorizada, comprobar que la API y el frontend no respondan desde Internet y cotejar estados normales, fallos confirmados y datos no evaluados. Después, activar y verificar la automonitorización del frontend y backend, probar el respaldo y la reversión del aplicativo y validar operación sostenida. El inventario de copias ya se muestra, pero no sustituye la prueba de integridad y recepción externa. El portal externo y las copias del NAS se validan por separado.
 
 No se publican endpoints privados, configuraciones internas ni registros sin depurar.

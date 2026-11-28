@@ -11,3 +11,7 @@
 | Copias | La recepción asistida del archivo integral en Windows coincidió por SHA-256. La retención local no sustituye la copia independiente. |
 
 La portada no es el portal completo. No se ha comprobado restaurar toda la infraestructura desde cero ni recuperar específicamente esta portada. Los disparos previstos del hosting y de las exportaciones semanales aún requerían evidencia en este corte.
+
+## El Control Center no es un sitio público
+
+El [módulo de Hosting del Control Center](control-center.md#avance-de-la-fase-850) ya permite revisar sitios y su respuesta en desarrollo. El alojamiento definitivo del propio panel, la sustitución de la página de prueba privada y la automonitorización siguen pendientes. Ninguno de estos cambios modifica el estado ni el acceso público de la portada provisional de la Dra. Mu-kien.

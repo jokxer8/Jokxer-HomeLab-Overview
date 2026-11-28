@@ -4,28 +4,35 @@
 
 ### NAS, nube privada y recuperación de datos
 
-Caso práctico de infraestructura doméstica: qué implementé, qué probé y qué sigue pendiente.
+Nube privada recuperable y un centro de control para entender qué funciona, qué requiere atención y cuándo se midió.
 
 ![Sistema: Debian 13](https://img.shields.io/badge/Sistema-Debian%2013-1E3A5F?style=for-the-badge)
 ![Restauración: Incremental validada](https://img.shields.io/badge/Restauraci%C3%B3n-Incremental%20validada-176754?style=for-the-badge)
 ![Imágenes Docker: 3 protegidas](https://img.shields.io/badge/Docker-3%20im%C3%A1genes%20protegidas-176754?style=for-the-badge)
 ![Automatización: Programada](https://img.shields.io/badge/Automatizaci%C3%B3n-Programada-94520B?style=for-the-badge)
 
-[🏠 Proyecto](#el-proyecto) · [✅ Resultados](#resultados-verificables) · [🧰 Infraestructura](#infraestructura-desplegada) · [🗺️ Catálogo de servicios](#catálogo-de-servicios) · [🗂️ Evidencia y alcance](resultados-de-respaldo.md) · [🌐 Hosting y portal](hosting-web.md) · [📊 Control Center](control-center.md) · [📍 Próxima etapa](#siguiente-etapa)
-
-**Ruta de lectura:** [Plan Maestro](PLAN-MAESTRO.md) · [En palabras simples](EN-PALABRAS-SIMPLES.md)
+[📊 Aplicativo](control-center.md#vista-del-aplicativo) · [✅ Resultados](#resultados-verificables) · [🧰 Infraestructura](infraestructura.md) · [💾 Respaldos](resultados-de-respaldo.md) · [🌐 Hosting](hosting-web.md) · [🗺️ Plan Maestro](PLAN-MAESTRO.md) · [🎓 En palabras simples](EN-PALABRAS-SIMPLES.md)
 
 </div>
 
-**Tecnologías en uso:** Debian y Docker para la nube privada, Tailscale para el acceso autorizado, Cloudflare Tunnel para la portada pública del portal y Resend para correo transaccional. [Qué hace cada herramienta](PLAN-MAESTRO.md#tecnologías-y-para-qué-las-uso).
-
 ## El proyecto
 
-Jokxer HomeLab es un laboratorio doméstico orientado a aprender administración de sistemas, almacenamiento, redes, contenedores, nube privada y recuperación ante fallos. Se desarrolla sobre una Dell reutilizada con Debian 13, priorizando estabilidad, seguridad y las herramientas disponibles.
+Convertí una laptop reutilizada con Debian en un NAS doméstico con nube privada, contenedores, acceso remoto privado y copias recuperables. Después construí un panel para consultar el estado del sistema en un solo lugar y saber cuándo falta evidencia antes de actuar.
 
-El trabajo ya cubre mucho más que la instalación inicial: el NAS comparte archivos, Nextcloud sincroniza con Windows, Tailscale habilita acceso privado, Docker ejecuta los servicios y ya cuenta con un proceso de respaldo implementado y pruebas de recuperación documentadas.
+| Frente | Estado comprobado | Qué falta |
+|---|---|---|
+| **NAS y nube privada** | Nextcloud, Docker y acceso privado verificados. | Completar validaciones de permisos de clientes SMB/NFS. |
+| **Respaldos** | Restauración aislada y primer disparo diario de Nextcloud comprobados. | Verificar los ciclos de hosting, exportación semanal y recepción externa por separado. |
+| **Control Center** | **11 vistas iniciales** en desarrollo; explorador histórico y diagnóstico avanzado incorporados. | Completar validaciones y desplegar por HTTPS privado. |
+| **Hosting** | Sitio de muestra recuperado y primera portada pública provisional publicada. | Verificar la recuperación específica del portal y sustituir la página privada de prueba por el aplicativo. |
 
-> **Ensayo de recuperación externa · 25 de noviembre de 2026.** La copia independiente se restauró en un entorno aislado. El escaneo recorrió 142 archivos en 24 carpetas sin errores; se verificaron descarga autenticada con contenido idéntico, escritura con comprobación del contenido y eliminación del archivo de prueba. Esto no mide el tiempo de recuperación ni verifica todos los archivos individualmente.
+## Control Center
+
+**Corte del aplicativo: 27 de noviembre de 2026, 22:52 AST.** El panel permite explorar tendencias históricas y consultar hardware, almacenamiento, red y respaldos sin modificar servicios. La API de lectura respondió en Debian y el frontend compiló en Windows. Todavía no se ha desplegado en su destino privado definitivo.
+
+[![Panel general del Control Center con indicadores de recursos, gráfica de CPU y alertas.](assets/control-center/panel-general.png)](control-center.md#vista-del-aplicativo)
+
+*Captura de la interfaz real con datos simulados.* [Ver capturas, alcance y próximos hitos](control-center.md#vista-del-aplicativo).
 
 ## Resultados verificables
 
@@ -39,79 +46,17 @@ El trabajo ya cubre mucho más que la instalación inicial: el NAS comparte arch
 
 [Ver las pruebas de respaldo y sus límites](resultados-de-respaldo.md).
 
-**Control Center · 27 de noviembre de 2026, 21:31 AST.** La interfaz de solo lectura ya muestra tarjetas de recursos, tendencia de CPU, alertas y una vista de Nextcloud. En Debian, la API privada devolvió datos de monitorización, alertas y una serie histórica. Son avances distintos: el despliegue definitivo del panel sigue pendiente. [Ver capturas, pruebas y siguiente hito](control-center.md#vista-del-aplicativo).
-
-[![Vista de demostración del Control Center, con gráfico de CPU, indicadores y alertas.](assets/control-center/panel-general.png)](control-center.md#vista-del-aplicativo)
-
-*Interfaz real con datos simulados; no muestra datos operativos del NAS.*
-
 ## Infraestructura desplegada
 
-El HomeLab tiene dos equipos. **Debian** concentra almacenamiento, Nextcloud, respaldos, hosting y servicios ligeros. **AnduinOS** queda asignado a servidores de juegos, virtualización, IA local y multimedia; la asignación no equivale a que todos esos servicios estén desplegados.
-
-| Área | Implementación | Estado |
-|---|---|---|
-| Sistema base | Debian 13 en una Dell reutilizada | Operativo |
-| NAS | Compartición de archivos SMB/NFS | Servicios desplegados; validación final de permisos desde clientes pendiente |
-| Contenedores | Docker y Docker Compose | Activos; los datos de Docker se mantienen en un volumen de servicios |
-| Nube personal | Nextcloud 34.0.6 con MariaDB y Redis | Operativo en la última prueba; restauración incremental validada |
-| Acceso web | HTTPS local con Nginx y acceso remoto privado con Tailscale/Serve | Probado; no publicado directamente en Internet |
-| Sincronización | Cliente oficial de Nextcloud en Windows, una cuenta y una carpeta | Sincronización bidireccional y archivos bajo demanda probados |
-| Red | Ethernet y firewall nftables | Validados; reglas de acceso mínimas |
-| Laboratorio web | Páginas sencillas para pruebas | Activas para experimentación |
+Debian concentra almacenamiento, Nextcloud, Docker, respaldos y hosting ligero. AnduinOS está reservado para juegos, virtualización, IA y multimedia; esa asignación no significa que todo esté instalado. [Ver arquitectura, servicios y decisiones](infraestructura.md#infraestructura-desplegada).
 
 ## Catálogo de servicios
 
-El catálogo reúne **16 iniciativas: 3 operativas, 1 implementada, 2 en validación, 1 en desarrollo y 9 planificadas**. Este recuento se limita al catálogo y no reemplaza el inventario técnico.
-
-| Servicio | Propósito | Estado |
-|---|---|---|
-| Nube privada Nextcloud | Archivos y sincronización | 🟢 Operativo |
-| Sistema de respaldos | Protección y recuperación | 🟢 Implementado |
-| Acceso remoto Tailscale | Conectividad privada segura | 🟢 Operativo |
-| Docker | Infraestructura de contenedores | 🟢 Operativo |
-| Hosting web multiproyecto | Alojar páginas web propias y de terceros | 🟡 Piloto validado |
-| [Primer sitio web de terceros](https://mukien.jokxer.dev/) | Portal académico alojado en el NAS | 🟡 Portada provisional publicada |
-| Servidor SFTP | Transferencia segura de archivos | 🔵 Planificado |
-| Biblioteca de videojuegos | Catálogo y descarga privada | 🔵 Planificado |
-| Servidor multimedia | Películas, música y fotografías  (AnduinOS) | 🔵 Planificado |
-| Gestor de documentos | Digitalización y clasificación | 🔵 Planificado |
-| Servidores de videojuegos | Minecraft y otros juegos compatibles  (AnduinOS) | 🔵 Planificado |
-| Bases de datos | Aplicaciones y proyectos de desarrollo | 🔵 Planificado |
-| Inteligencia artificial local | Modelos y asistentes privados  (AnduinOS) | 🔵 Planificado |
-| Máquinas virtuales | Laboratorios y experimentación  (AnduinOS) | 🔵 Planificado |
-| [Monitorización centralizada](control-center.md) | Rendimiento, disponibilidad e historial | 🟡 En desarrollo; componentes probados |
-| Portal de servicios Jokxer | Administración y acceso centralizado | 🔵 Planificado |
-
-El primer respaldo diario de Nextcloud ya está validado. El hosting multiproyecto tiene un piloto y una primera portada provisional de terceros; aún no representa una plataforma multiproyecto en producción. MariaDB ya funciona para Nextcloud; ofrecer bases de datos a otros proyectos sigue planificado. El portal central Jokxer sigue planificado y no es la portada académica.
+[Consultar las 16 iniciativas y su estado](infraestructura.md#catálogo-de-servicios). Se distingue entre servicio en operación, piloto y trabajo planificado.
 
 ## Avances que ya se realizaron
 
-### 1. Base del NAS y almacenamiento
-
-Se instaló Debian 13, se configuró la administración por SSH y se dejó el equipo operativo por Ethernet. El SSD Kingston de 2 TB usa LVM para el sistema, los servicios y los datos. Docker quedó separado en su área de servicios. Un disco externo de 5 TB aloja los datos de Nextcloud y existe un volumen aparte para el laboratorio.
-
-La distribución del SSD está en uso y se conserva sin reformatear, reparticionar ni redimensionar. El disco de laboratorio de 1 TB registró sectores pendientes en una lectura SMART previa y no se considera adecuado para datos críticos.
-
-### 2. Servicios y sincronización
-
-Se desplegaron SMB/NFS, Docker, Nextcloud, MariaDB, Redis y páginas web de prueba. Se comprobó el acceso HTTPS local y el acceso remoto mediante la red privada Tailscale. En Windows se probó la navegación, apertura, carga y sincronización en ambos sentidos utilizando una sola cuenta y una sola carpeta.
-
-### 3. Respaldos y recuperación de Nextcloud
-
-- El ciclo de respaldo comprueba la integridad con SHA-256, impide ejecuciones simultáneas y evita escribir cuando faltan montajes requeridos.
-- Se validó una **restauración incremental aislada**: se restauraron la base de datos y los archivos, y se probaron descarga, escritura y eliminación sin alterar producción.
-- Se interrumpió un respaldo de forma controlada y se reinició el NAS. La recuperación devolvió Nextcloud a funcionamiento normal y no dejó una recuperación pendiente.
-- El primer disparo diario posterior a los ajustes terminó con éxito el 26 de noviembre. Se verificaron SHA-256 y salida del modo de mantenimiento. La exportación semanal y la recepción asistida se validan por separado.
-- Se verificaron copias independientes en Windows con SHA-256, BitLocker y permisos restrictivos. La retención separa las ventanas semanales y mensuales de la copia histórica protegida.
-- Se corrigió la reexportación para poder regenerar la misma instantánea sin cambiar el archivo comprimido en el caso probado. El receptor conserva el control de integridad y evita duplicados.
-- Se respaldaron y volvieron a importar las imágenes de Nextcloud, MariaDB y Redis. Las imágenes y los datos se conservan por separado.
-
-### 4. Piloto de hosting y primer portal
-
-- Nginx sirvió el sitio de muestra y la portada de la Dra. Mu-kien Sang Ben. Solo la portada provisional se publicó por el túnel HTTPS; Nextcloud siguió privado.
-- El sitio de muestra se restauró en Nginx aislado con HTTP 200 y contenido idéntico. El respaldo integral que incluye la portada provisional llegó a Windows con SHA-256 coincidente, en una ejecución asistida.
-- Se validó y aplicó la recarga atómica del firewall conservando las reglas de acceso. El sondeo desde el cliente Windows autorizado confirmó conectividad TCP a SSH y HTTPS por la red local; los servicios internos ensayados permanecieron aislados. [Resultados de hosting](hosting-web.md) · [Caso del portal](https://github.com/jokxer8/Portal-Mukien-Sang-Ben-Overview).
+[Consultar los hitos de instalación, sincronización, recuperación y hosting](infraestructura.md#avances-que-ya-se-realizaron).
 
 ## Cómo verifico los respaldos
 
@@ -125,28 +70,13 @@ Se desplegaron SMB/NFS, Docker, Nextcloud, MariaDB, Redis y páginas web de prue
 
 ## Decisiones de seguridad y estabilidad
 
-- **Acceso privado:** Nextcloud se mantiene dentro de la LAN y Tailscale; no se publica directamente en Internet ni se abren puertos WAN para el servicio.
-- **Mínimo acceso:** el firewall mantiene reglas restrictivas y SMB/NFS quedan para redes privadas.
-- **Pruebas aisladas:** la restauración se valida en un entorno separado para reducir el riesgo a los datos de producción.
-- **Autenticación:** las cuentas de Nextcloud tienen TOTP y códigos de recuperación configurados; el correo saliente tuvo una prueba exitosa.
-- **Almacenamiento protegido:** no se modifica el particionado ni los volúmenes LVM del SSD Kingston de 2 TB.
-- **Disco de laboratorio:** el HDD de 1 TB, con antecedente de sectores pendientes, no se usa para información crítica ni como copia fiable.
-- **Privacidad de publicación:** no se incluyen credenciales, claves, tokens, direcciones internas ni identificadores de los discos.
+[Ver las decisiones y límites de publicación](infraestructura.md#decisiones-de-seguridad-y-estabilidad). El panel y Nextcloud son privados; la publicación externa de la portada provisional del portal es independiente.
 
 ## Siguiente etapa
 
-1. Confirmar el primer respaldo diario de hosting, los disparos de ambas exportaciones semanales y sus recepciones asistidas en Windows.
-2. Restaurar Nextcloud en un entorno aislado desde el nuevo formato reproducible y medir el tiempo hasta verificar el acceso.
-3. Ensayar la recuperación completa en un host vacío y evaluar una copia fuera de la ubicación física.
-
-4. Publicar el Control Center solo dentro de la red privada y por HTTPS, comprobar que no sea accesible desde Internet y cotejar en pantalla datos vigentes, fallos y falta de señal. [Criterio de cierre](control-center.md#primera-versión-visible).
-
-Las pruebas de permisos SMB/NFS, el diagnóstico del disco de laboratorio y los nuevos servicios conservan su alcance anterior.
+- **Control Center:** completar diagnósticos pendientes, validar el acceso HTTPS por LAN/Tailscale y comprobar que no sea accesible desde Internet. Reemplazar la página privada de prueba solo tras esas pruebas y verificar la automonitorización.
+- **Continuidad:** registrar cada disparo automático y la recepción de su copia por separado. Ensayar restauración desde el formato reproducible y medir el tiempo de recuperación.
 
 ## Documentación y alcance
 
-[Portada provisional de la Dra. Sang Ben](https://mukien.jokxer.dev/) · [Caso del portal](https://github.com/jokxer8/Portal-Mukien-Sang-Ben-Overview)
-
-[Resultados de respaldo](resultados-de-respaldo.md) · [Volver al HomeLab en el perfil de Jokxer8](https://github.com/jokxer8#homelab-y-nas)
-
-La bitácora operativa no forma parte de la publicación. Este resumen no incluye direcciones, rutas internas, identificadores, bitácoras en bruto ni secretos.
+[Plan Maestro](PLAN-MAESTRO.md) · [Caso del portal](https://github.com/jokxer8/Portal-Mukien-Sang-Ben-Overview) · [Perfil de Jokxer8](https://github.com/jokxer8#homelab-y-nas). No se publican rutas, direcciones, registros internos ni secretos.
